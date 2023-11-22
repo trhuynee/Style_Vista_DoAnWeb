@@ -95,7 +95,7 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.tai-khoan-admin.them-tai-khoan-admin') }}">
+                <a class="nav-link" href="{{ route('admin.tai-khoan.them-tai-khoan-admin') }}">
                     <i class="fa fa-user-plus" aria-hidden="true"></i>
                     <span>Thêm tài khoản</span></a>
             </li>
@@ -339,9 +339,13 @@ $name = session('name'); @endphp data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ $name }}</span>
                                 <?php
-                                    $avatar = session('avatar'); 
+                                $avatar = session('avatar');
                                 ?>
-                                <img class="img-profile rounded-circle" src="{{$avatar}}">
+                                @if ($avatar == null)
+                                    <img class="img-profile rounded-circle" src="{{ asset('img/avatar.png') }}">
+                                @else
+                                    <img class="img-profile rounded-circle" src="{{ $avatar }}">
+                                @endif
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -393,13 +397,13 @@ $name = session('name'); @endphp data-toggle="dropdown" aria-haspopup="true"
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Đăng xuất?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">Xác nhận đăng xuất!!!.</div>
-                <form action="{{route('dang-xuat')}}" method="POST">
+                <form action="{{ route('dang-xuat') }}" method="POST">
                     @csrf
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>

@@ -10,7 +10,7 @@
             @endif </h6>
         </div>
         <div class="card-body">
-            <form action="{{route('admin.tai-khoan-admin.xu-li-them-tai-khoan-admin')}}" method="POST" enctype="multipart/form-data">
+            <form action="{{route('admin.tai-khoan.xu-li-them-tai-khoan-admin')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-row">
                     <div class="form-group col-md-6">

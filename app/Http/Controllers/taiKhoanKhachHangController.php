@@ -13,7 +13,8 @@ class taiKhoanKhachHangController extends Controller
      */
     public function index()
     {
-        $users = User::where('phanquyen', 2)->get();
+        $users = User::where('phanquyen', 2)
+        ->get();
         return view('admin.tai-khoan.danh-sach-tai-khoan-khach-hang', compact('users'));
     }
 

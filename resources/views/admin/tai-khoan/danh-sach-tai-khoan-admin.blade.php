@@ -44,7 +44,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="#">Chi tiết</a>
+                                    <a href="{{ route('admin.tai-khoan.chinh-sua-tai-khoan', ['id' => $item->id]) }}">Xem chi tiết</a>
                                 </td>
                             </tr>
                         @endforeach
