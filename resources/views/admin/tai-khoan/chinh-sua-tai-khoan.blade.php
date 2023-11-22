@@ -44,13 +44,13 @@
                             <div class="form-group col-md-3">
                                 <label for="inputState">Chức vụ</label>
                                 <select id="inputState" name="phanquyen" class="form-control">
-                                    @if ($user->phanquyen == 0)
+                                    @if ($user->phanquyen == 1)
                                         <option selected value="1">Quản trị viên</option>
                                     @else
                                         <option selected value="2">Khách hàng</option>
                                     @endif
                                     </option>
-                                    @if ($user->phanquyen == 0)
+                                    @if ($user->phanquyen == 1)
                                         <option value="1">Quản trị viên</option>
                                         <option value="2">Khách hàng</option>
                                     @endif
