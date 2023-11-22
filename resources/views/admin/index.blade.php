@@ -64,17 +64,15 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                         aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-cog"></i>
+                        <i class="fa fa-user" aria-hidden="true"></i>
                         <span>Quản trị viên</span>
                     </a>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Chức năng:</h6>
                             <a class="collapse-item"
-                                href="{{ route('admin.tai-khoan.danh-sach-tai-khoan-admin') }}">Danh sách tài
+                                href="{{ route('admin.tai-khoan-admin.danh-sach-tai-khoan-admin') }}">Danh sách tài
                                 khoản</a>
-                            <a class="collapse-item" href="{{ route('admin.tai-khoan.them-tai-khoan-admin') }}">Thêm
-                                tài khoản</a>
                         </div>
                     </div>
                 </li>
@@ -83,19 +81,24 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
+                    <i class="fa fa-users" aria-hidden="true"></i>
                     <span>Khách hàng</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Chức năng:</h6>
-                        <a class="collapse-item" href="buttons.html">Danh sách tài khoản</a>
-                        <a class="collapse-item" href="cards.html">Thêm tài khoản</a>
+                        <a class="collapse-item"
+                            href="{{ route('admin.tai-khoan-khach-hang.danh-sach-tai-khoan-khach-hang') }}">Danh sách
+                            tài khoản</a>
                     </div>
                 </div>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.tai-khoan-admin.them-tai-khoan-admin') }}">
+                    <i class="fa fa-user-plus" aria-hidden="true"></i>
+                    <span>Thêm tài khoản</span></a>
+            </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -335,7 +338,10 @@
 $name = session('name'); @endphp data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ $name }}</span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                <?php
+                                    $avatar = session('avatar'); 
+                                ?>
+                                <img class="img-profile rounded-circle" src="{{$avatar}}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -392,11 +398,14 @@ $name = session('name'); @endphp data-toggle="dropdown" aria-haspopup="true"
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
+                <div class="modal-body">Xác nhận đăng xuất!!!.</div>
+                <form action="{{route('dang-xuat')}}" method="POST">
+                    @csrf
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+                        <button class="btn btn-primary" type="submit">Đăng xuất</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class taiKhoanAdminController extends Controller
 {
@@ -30,7 +32,24 @@ class taiKhoanAdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $filename = time() . '.' . $avatar->getClientOriginalExtension();
+            $avatar->storeAs('public/avatars', $filename);
+            $avatarUrl = '/storage/avatars/' . $filename;
+        } else {
+            $avatarUrl = null;
+        }
+        $user = new User;
+        $user->sdt = $request->input('sdt');
+        $user->password = Hash::make($request->input('password'));
+        $user->hovaten = $request->input('hovaten');
+        $user->email = $request->input('email');
+        $user->diachi = $request->input('diachi');
+        $user->phanquyen = $request->input('phanquyen');
+        $user->avatar = $avatarUrl;
+        $user->save();
+        return \redirect()->back();
     }
 
     /**

@@ -21,7 +21,7 @@ class loginController extends Controller
         $taiKhoan = $request->only('email', 'password');
         if(Auth::attempt($taiKhoan)){
             $user = Auth::user();
-            session(['id' => $user->id, 'name' => $user->hovaten, 'chucvu' => $user->phanquyen]);
+            session(['id' => $user->id, 'name' => $user->hovaten, 'chucvu' => $user->phanquyen, 'avatar'=>$user->avatar]);
             $phanQuyen = $user->phanQuyen;
             $chuyenDoi = intval($phanQuyen);
             if($chuyenDoi == 0 || $chuyenDoi == 1){

@@ -3,7 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\controllers\loginController;
 use App\Http\controllers\sanPhamController;
+use App\Http\controllers\taiKhoanKhachHangController;
 use App\Http\controllers\taiKhoanAdminController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 
 /*
@@ -19,13 +22,22 @@ use App\Http\controllers\taiKhoanAdminController;
 
 Route::get('/dang-nhap', function () {
     return view('login');
-});
+})->name('dang-nhap');
 Route::get('/', function () {
     return view('user.index');
 })->name('trang-chu-nguoi-dung');
 Route::get('/404', function () {
     return view('404');
 })->name('trang-loi');
+/**
+     * đăng xuất
+ */
+Route::post('/dang-xuat', function () {
+    Auth::logout();
+    session()->flush();
+    return redirect()->route('dang-nhap');
+})->name('dang-xuat');
+
 Route::post('/dang-nhap',[loginController::class,'login'])->name('xu-li-dang-nhap');
 Route::post('/dang-ki',[loginController::class,'register'])->name('xu-li-dang-ki');
 Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
@@ -33,9 +45,14 @@ Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => 'admin'], 
     /**
      * tài khoản
      */
-    Route::group(['prefix' => '/tai-khoan', 'as' => 'tai-khoan.'], function (){
+    Route::group(['prefix' => '/tai-khoan-admin', 'as' => 'tai-khoan-admin.'], function (){
         Route::get('/danh-sach-tai-khoan-admin', [taiKhoanAdminController::class, 'index'])->name('danh-sach-tai-khoan-admin');
-        Route::get('/them-tai-khoan-admin', [taiKhoanAdminController::class, 'create'])->name('them-tai-khoan-admin');
+        Route::get('/them-tai-khoan', [taiKhoanAdminController::class, 'create'])->name('them-tai-khoan-admin');
+        Route::post('/them-tai-khoan', [taiKhoanAdminController::class, 'store'])->name('xu-li-them-tai-khoan-admin');
+
+    });
+    Route::group(['prefix' => '/tai-khoan-khach-hang', 'as' => 'tai-khoan-khach-hang.'], function (){
+        Route::get('/danh-sach-tai-khoan-khach-hang', [taiKhoanKhachHangController::class, 'index'])->name('danh-sach-tai-khoan-khach-hang');
     });
     /**
      * Sản phẩm

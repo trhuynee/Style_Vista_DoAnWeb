@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('hovaten');
             $table->string('email')->unique();;
             $table->string('diachi')->nullable();
-            $table->tinyInteger('phanquyen')->default('1');
+            $table->tinyInteger('phanquyen')->default('2');
             $table->string('avatar')->nullable();
             $table->tinyInteger('trangthai')->default('0');
             $table->timestamps();
