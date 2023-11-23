@@ -20,25 +20,28 @@
                             <div class="form-group col-md-12">
                                 <label for="inputEmail4">Email</label>
                                 <input type="email" name="email" class="form-control" id="inputEmail4"
-                                    placeholder="{{ $user->email }}" readonly>
+                                    value="{{ $user->email }}" readonly>
                             </div>
 
                         </div>
                         <div class="form-group">
                             <label for="inputAddress">Họ và tên</label>
                             <input type="text" name="hovaten" class="form-control" id="inputAddress"
-                                placeholder="{{ $user->hovaten }}">
+                                value="{{ $user->hovaten }}">
+                            <div class="error-message">{{ $errors->first('hovaten') }}</div>
                         </div>
                         <div class="form-group">
                             <label for="inputAddress2">Số điện thoại</label>
                             <input type="number" name="sdt" class="form-control" id="inputAddress2"
-                                placeholder="{{ $user->sdt }}">
+                                value="{{ $user->sdt }}">
+                            <div class="error-message">{{ $errors->first('sdt') }}</div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-5">
                                 <label for="inputCity">Địa chỉ</label>
                                 <input type="text" name="diachi" class="form-control" id="inputCity"
-                                    placeholder="{{ $user->diachi }}">
+                                    value="{{ $user->diachi }}">
+                                <div class="error-message">{{ $errors->first('diachi') }}</div>
                             </div>
 
                             <div class="form-group col-md-3">
@@ -154,8 +157,8 @@
                 <div class="modal-body">
                     <form action="{{ route('admin.tai-khoan.cap-nhat-mat-khau', ['id' => $user->id]) }}" method="POST">
                         @csrf
-                        <input type="password" name="password" class="form-control form-control-user" id="exampleInputEmail"
-                            aria-describedby="emailHelp" placeholder="Mật khẩu mới...">
+                        <input type="password" name="password" class="form-control form-control-user"
+                            id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Mật khẩu mới...">
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" type="submit">Xác nhận</button>

@@ -114,7 +114,7 @@
             overflow: hidden;
             width: 768px;
             max-width: 100%;
-            min-height: 480px;
+            min-height: 600px;
         }
 
         .form-container {
@@ -269,14 +269,30 @@
             color: #3c97bf;
             text-decoration: none;
         }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .success-message {
+            color: green;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
     </style>
 </head>
 
 <body>
+    @if (session('success'))
+        @alert(['type' => 'success', 'title' => 'Success'])
+        {{ session('success') }}
+        @endalert
+    @endif
     <h2>Chào mừng bạn đến với SHOPDOHIEU</h2>
     <div class="container" id="container">
         <div class="form-container sign-up-container">
-            <form action="{{route('xu-li-dang-ki')}}" method="POST">
+            <form action="{{ route('xu-li-dang-ki') }}" method="POST">
                 @csrf
                 <h1>Đăng kí tài khoản</h1>
                 <div class="social-container">
@@ -286,25 +302,30 @@
                 </div>
                 <span>Hoặc sử dụng email của bạn để đăng ký</span>
                 <input type="text" name="name" placeholder="Họ và tên" />
+                <div class="error-message">{{ $errors->first('hovaten') }}</div>
                 <input type="email" name="email" placeholder="Email" />
+                <div class="error-message">{{ $errors->first('email') }}</div>
                 <input type="password" name="password" placeholder="Password" />
+                <div class="error-message">{{ $errors->first('password') }}</div>
                 <button type="submit">Đăng kí</button>
             </form>
         </div>
         <div class="form-container sign-in-container">
-            <form action="{{ route('xu-li-dang-nhap')}}" method="post" id="form-login">
+            <form action="{{ route('xu-li-dang-nhap') }}" method="post" id="form-login">
                 @csrf
-                    <h1>Đăng nhập</h1>
-                    <div class="social-container">
-                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                        <span>Hoặc sử dụng tài khoản của bạn</span>
-                        <input type="email" name="email" placeholder="Email" />
-                        <input type="password" name="password" placeholder="Password" />
-                        <a href="#">Quên mật khẩu?</a>
-                        <button type="submit">Đăng nhập</button>
+                <h1>Đăng nhập</h1>
+                <div class="social-container">
+                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                <span>Hoặc sử dụng tài khoản của bạn</span>
+                <input type="email" name="email" placeholder="Email" />
+                <div class="error-message">{{ $errors->first('email') }}</div>
+                <input type="password" name="password" placeholder="Password" />
+                <div class="error-message">{{ $errors->first('password') }}</div>
+                <a href="#">Quên mật khẩu?</a>
+                <button type="submit">Đăng nhập</button>
             </form>
         </div>
         <div class="overlay-container">
@@ -322,7 +343,10 @@
             </div>
         </div>
     </div>
+    
+    @include('sweetalert::alert')
 </body>
+@include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@9'])
 <script>
     const signUpButton = document.getElementById('signUp');
     const signInButton = document.getElementById('signIn');

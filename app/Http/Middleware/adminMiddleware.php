@@ -17,10 +17,14 @@ class adminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && (Auth::user()->phanquyen == 0 || (Auth::user()->phanquyen == 1))) {
+        if (Auth::check() && (Auth::user()->phanquyen == 0 || (Auth::user()->phanquyen == 1) && (Auth::user()->trangthai == 0))) {
             return $next($request);
+        }elseif((Auth::user()->trangthai == 1)){
+            Alert::error('Đăng nhập không thành công', 'Tài khoản bị vô hiệu hóa. Vui lòng liên hệ admin! ');
+                return redirect('dang-nhap');
         }else{
-            return \redirect()->route('trang-loi');
+            Alert::error('Đăng nhập không thành công', 'Tài khoản hoặc mật khẩu không chính xác! ');
+            return redirect()->route('dang-nhap');
         }
         
     }
