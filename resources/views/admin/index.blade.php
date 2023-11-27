@@ -26,12 +26,12 @@
             font-size: 14px;
             margin-top: 5px;
         }
+
         .success-message {
             color: green;
             font-size: 14px;
             margin-top: 5px;
         }
-
     </style>
 </head>
 
@@ -117,7 +117,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Addons
+                Sản phẩm
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -125,27 +125,31 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
+                    <span>Sản phẩm</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                        <h6 class="collapse-header">Sản phẩm:</h6>
+                        <a class="collapse-item" href="{{ route('admin.san-pham.them-san-pham') }}">Thêm sản phẩm</a>
+                        <a class="collapse-item" href="{{ route('admin.san-pham.danh-sach-san-pham') }}">Danh sách sản
+                            phẩm</a>
                         <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
+                        <h6 class="collapse-header">Cấu hình sản phẩm:</h6>
+                        <a class="collapse-item" href="{{ route('admin.mau-san-pham.mau-san-pham') }}">Màu</a>
+                        <a class="collapse-item" href="{{ route('admin.nhan-hieu-san-pham.nhan-hieu-san-pham') }}">Nhãn
+                            hiệu</a>
                     </div>
                 </div>
+
             </li>
 
             <!-- Nav Item - Charts -->
+
+            <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="{{ route('admin.loai-san-pham.loai-san-pham') }}">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+                    <span>Loại sản phẩm</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
@@ -426,9 +430,10 @@ $name = session('name'); @endphp data-toggle="dropdown" aria-haspopup="true"
             </div>
         </div>
     </div>
+
     @include('sweetalert::alert')
 </body>
-@include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
+@include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@9'])
 <!-- Bootstrap core JavaScript-->
 <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

@@ -36,7 +36,7 @@ class taiKhoanAdminController extends Controller
         $request->validate([
             'sdt' => 'required|size:10',
             'hovaten' => 'required|max:30',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:user,email',
             'password' => 'required|min:6',
             'diachi' => 'required|max:255',
             'phanquyen' => 'required',
@@ -44,6 +44,7 @@ class taiKhoanAdminController extends Controller
             'sdt.required' => 'Không được để trống',
             'sdt.size' => 'Số điện thoại phải đủ 10 số',
             'email.required' => 'Không được để trống',
+            'email.unique' => 'email đã tồn tại',
             'email.email' => 'Định dạng không hợp lệ',
             'hovaten.required' => 'Không được để trống',
             'hovaten.max' => 'Mật khẩu không quá 30 ký tự',
@@ -70,7 +71,7 @@ class taiKhoanAdminController extends Controller
         $user->phanquyen = $request->input('phanquyen');
         $user->avatar = $avatarUrl;
         $user->save();
-        Alert()->success('SuccessAlert','Lorem ipsum dolor sit amet.');
+        Alert()->success('Thành công','Thêm tài khoản thành công.');
         return \redirect()->back();
     }
 
@@ -126,6 +127,7 @@ class taiKhoanAdminController extends Controller
         $user->avatar = $avatarUrl ?? $user->avatar;
         $user->updated_at = now();
         $user->save();
+        Alert()->success('Thành công','Chỉnh sửa tài khoản thành công.');
         return redirect()->back();
     }
     /**

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Image Upload</title>
+</head>
+<body>
+    <form id="uploadForm">
+        <input type="file" id="imageInput" name="images[]" multiple accept="image/*">
+        <button type="button" onclick="uploadImages()">Upload Images</button>
+    </form>
+
+    <div id="preview"></div>
+
+    <script>
+        function uploadImages() {
+            var form = document.getElementById('uploadForm');
+            var formData = new FormData(form);
+
+            // Gửi dữ liệu lên server sử dụng XMLHttpRequest hoặc Fetch API
+            // Đối với XMLHttpRequest:
+            // var xhr = new XMLHttpRequest();
+            // xhr.open('POST', 'your_upload_endpoint.php', true);
+            // xhr.send(formData);
+
+            // Đối với Fetch API:
+            fetch('your_upload_endpoint.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Upload successful:', data);
+                // Hiển thị thông báo hoặc xử lý kết quả upload ở đây
+            })
+            .catch(error => {
+                console.error('Upload failed:', error);
+            });
+        }
+
+        // Hiển thị hình ảnh trước khi upload (tùy chọn)
+        document.getElementById('imageInput').addEventListener('change', function() {
+            var preview = document.getElementById('preview');
+
+            // Xóa toàn bộ nội dung của preview trước khi thêm mới
+            preview.innerHTML = '';
+
+            var files = this.files;
+            for (var i = 0; i < files.length; i++) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    var imgContainer = document.createElement('div');
+                    var img = document.createElement('img');
+                    var deleteBtn = document.createElement('button');
+
+                    img.src = e.target.result;
+                    img.style.maxWidth = '100px';
+                    img.style.maxHeight = '100px';
+
+                    deleteBtn.innerText = 'Delete';
+                    deleteBtn.addEventListener('click', function() {
+                        imgContainer.remove();
+
+                        // Thay đổi giá trị input file để kích hoạt lại sự kiện change
+                        document.getElementById('imageInput').value = '';
+                    });
+
+                    imgContainer.appendChild(img);
+                    imgContainer.appendChild(deleteBtn);
+                    preview.appendChild(imgContainer);
+                }
+
+                reader.readAsDataURL(files[i]);
+            }
+        });
+    </script>
+</body>
+</html>
