@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\LoaiSanPham;
 use App\Models\Mau;
+use App\Models\binhluan;
+
 use App\Models\ChiTietSanPham;
 use App\Models\Image;
 use App\Models\SanPham;
@@ -124,8 +126,22 @@ class sanPhamController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function trangchu()
     {
-        //
+        $ctsp = chiTietSanPham::all();
+        return view('user.home', compact('ctsp'));
+    }
+    public function ctsanpham(string $id){
+        $binhluan = binhluan::where('sanpham_id', $id)->get();
+        $ctsanpham = ChiTietSanPham::find($id);
+        return view('user.chi-tiet-san-pham', compact('ctsanpham','binhluan'));
+    }
+    public function binhluan(Request $request, string $id){
+        $binhluan = new binhluan;
+        $binhluan->nguoidung_id = session('id');
+        $binhluan->sanpham_id = $id;
+        $binhluan->noidung= $request->input('noidung');
+        $binhluan->save();
+        return \redirect()->back(); 
     }
 }

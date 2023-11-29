@@ -25,14 +25,33 @@ use Illuminate\Support\Facades\Hash;
 */
 
 Route::get('/dang-nhap', function () {
-    return view('login');
+    return view('user.dang-nhap');
 })->name('dang-nhap');
-Route::get('/', function () {
-    return view('user.index');
-})->name('trang-chu-nguoi-dung');
+
+Route::get('/',[sanPhamController::class,'trangchu'])->name('trang-chu-nguoi-dung');
+Route::get('/chi-tiet-san-pham/{id}', [sanPhamController::class, 'ctsanpham'])->name('trang-chi-tiet-san-pham');
+Route::post('/chi-tiet-san-pham/{id}',[sanPhamController::class,'binhluan'])->name('xu-li-binh-luan');
+
+Route::get('/gioi-thieu', function () {
+    return view('user.gioi-thieu');
+})->name('trang-gioi-thieu');
+
+Route::get('/san-pham', function () {
+    return view('user.san-pham');
+})->name('trang-san-pham');
+Route::get('/lien-he', function () {
+    return view('user.lien-he');
+})->name('trang-lien-he');
+
+
+Route::get('/gio-hang', function () {
+    return view('user.gio-hang');
+})->name('trang-gio-hang');
+
 Route::get('/404', function () {
     return view('404');
 })->name('trang-loi');
+
 /**
      * đăng xuất
  */

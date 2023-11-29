@@ -68,53 +68,110 @@
                 </div>
             </div>
         </div>
-        <div class="form-group col-md-3">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3" id="accordion">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <p class="m-0 font-weight-bold text-primary">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Chức năng</a>
-                                </h4>
-                        </div>
-                        <div id="collapseThree" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <div class="card-body">
-                                    <div class="form-group">
-                                        <a href="#" class="btn btn-danger btn-icon-split" data-toggle="modal"
-                                            data-target="#logoutModal1">
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-trash"></i>
-                                            </span>
-                                            <span class="text">Xóa sản phẩm con</span>
-                                        </a>
+        <div class="col col-md-3">
+            <div class="form-group">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3" id="accordion">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <p class="m-0 font-weight-bold text-primary">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Chức năng</a>
+                                    </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <a href="#" class="btn btn-danger btn-icon-split" data-toggle="modal"
+                                                data-target="#logoutModal1">
+                                                <span class="icon text-white-50">
+                                                    <i class="fas fa-trash"></i>
+                                                </span>
+                                                <span class="text">Xóa sản phẩm con</span>
+                                            </a>
+                                        </div>
+                                        <form action="#" method="POST">
+                                            @csrf
+                                            @if ($sanpham->trangthai == 1)
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-success btn-icon-split"
+                                                        name="phanquyen" value="0">
+                                                        <span class="icon text-white-50">
+                                                            <i class="fas fa-check"></i>
+                                                        </span>
+                                                        <span class="text">Kích hoạt sản phẩm</span>
+                                                    </button>
+                                                </div>
+                                            @else
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-warning btn-icon-split"
+                                                        name="phanquyen" value="0">
+                                                        <span class="icon text-white-50">
+                                                            <i class="fas fa-exclamation-triangle"></i>
+                                                        </span>
+                                                        <span class="text">Vô hiệu hóa</span>
+                                                    </button>
+                                                </div>
+                                            @endif
+                                        </form>
                                     </div>
-                                    <form action="#" method="POST">
-                                        @csrf
-                                        @if ($sanpham->trangthai == 1)
-                                            <div class="form-group">
-                                                <button type="submit" class="btn btn-success btn-icon-split"
-                                                    name="phanquyen" value="0">
-                                                    <span class="icon text-white-50">
-                                                        <i class="fas fa-check"></i>
-                                                    </span>
-                                                    <span class="text">Kích hoạt sản phẩm</span>
-                                                </button>
-                                            </div>
-                                        @else
-                                            <div class="form-group">
-                                                <button type="submit" class="btn btn-warning btn-icon-split"
-                                                    name="phanquyen" value="0">
-                                                    <span class="icon text-white-50">
-                                                        <i class="fas fa-exclamation-triangle"></i>
-                                                    </span>
-                                                    <span class="text">Vô hiệu hóa</span>
-                                                </button>
-                                            </div>
-                                        @endif
-                                    </form>
                                 </div>
                             </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3" id="accordion">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <p class="m-0 font-weight-bold text-primary">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Hình ảnh
+                                        sản phẩm</a>
+                                    </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <a href="#" class="btn btn-danger btn-icon-split" data-toggle="modal"
+                                                data-target="#logoutModal1">
+                                                <span class="icon text-white-50">
+                                                    <i class="fas fa-trash"></i>
+                                                </span>
+                                                <span class="text">Xóa sản phẩm con</span>
+                                            </a>
+                                        </div>
+                                        <form action="#" method="POST">
+                                            @csrf
+                                            @if ($sanpham->trangthai == 1)
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-success btn-icon-split"
+                                                        name="phanquyen" value="0">
+                                                        <span class="icon text-white-50">
+                                                            <i class="fas fa-check"></i>
+                                                        </span>
+                                                        <span class="text">Kích hoạt sản phẩm</span>
+                                                    </button>
+                                                </div>
+                                            @else
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-warning btn-icon-split"
+                                                        name="phanquyen" value="0">
+                                                        <span class="icon text-white-50">
+                                                            <i class="fas fa-exclamation-triangle"></i>
+                                                        </span>
+                                                        <span class="text">Vô hiệu hóa</span>
+                                                    </button>
+                                                </div>
+                                            @endif
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -219,7 +276,7 @@
                                 <td>{{ $item->dongia }}</td>
                                 <td>{{ $item->giamgia }}%</td>
                                 <td>
-                                    @if ($item->trangthai==0)
+                                    @if ($item->trangthai == 0)
                                         Xuất bản
                                     @else
                                         Nháp

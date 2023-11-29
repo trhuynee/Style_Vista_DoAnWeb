@@ -2299,6 +2299,7 @@ responsive
 
 
 
+/*
 #preloader {
   overflow: hidden;
   background-color: #2a2a2a;
@@ -2347,6 +2348,7 @@ responsive
   -webkit-animation-delay: 0.66666s;
   animation-delay: 0.66666s;
 }
+**/
 
 @-webkit-keyframes jumper {
   0% {
