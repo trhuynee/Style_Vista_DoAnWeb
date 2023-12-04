@@ -16,9 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('sanpham_id');
             $table->unsignedBigInteger('mau_id');
             $table->tinyInteger('size');
-            $table->string('dongia');
             $table->integer('soluong');
-            $table->integer('giamgia');
             $table->tinyInteger('trangthai')->default('0');
             $table->timestamps();
             $table->foreign('sanpham_id')->references('id')->on('sanpham');

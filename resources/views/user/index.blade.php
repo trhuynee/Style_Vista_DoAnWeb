@@ -814,6 +814,7 @@ https://templatemo.com/tm-571-hexashop
     <script src="{{asset('assets/js/slick.js')}}"></script>
     <script src="{{asset('assets/js/lightbox.js')}}"></script>
     <script src="{{asset('assets/js/isotope.js')}}"></script>
+    <script src="https://kit.fontawesome.com/f87157a229.js" crossorigin="anonymous"></script>
     <!-- Global Init -->
     <script src="assets/js/custom.js"></script>
 

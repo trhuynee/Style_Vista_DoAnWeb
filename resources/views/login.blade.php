@@ -284,27 +284,25 @@
 </head>
 
 <body>
-    @if (session('success'))
-        @alert(['type' => 'success', 'title' => 'Success'])
-        {{ session('success') }}
-        @endalert
-    @endif
     <h2>Chào mừng bạn đến với SHOPDOHIEU</h2>
     <div class="container" id="container">
         <div class="form-container sign-up-container">
             <form action="{{ route('xu-li-dang-ki') }}" method="POST">
                 @csrf
-                <h1>Đăng kí tài khoản</h1>
-                <div class="social-container">
-                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-                </div>
-                <span>Hoặc sử dụng email của bạn để đăng ký</span>
-                <input type="text" name="name" placeholder="Họ và tên" />
+                <h4>Đăng kí tài khoản</h4>
+                <span>Sử dụng email của bạn để đăng ký</span>
+                <input type="text" name="hovaten" placeholder="Họ và tên" />
                 <div class="error-message">{{ $errors->first('hovaten') }}</div>
-                <input type="email" name="email" placeholder="Email" />
-                <div class="error-message">{{ $errors->first('email') }}</div>
+
+                <input type="text" name="sdt" placeholder="Số điện thoại" />
+                <div class="error-message">{{ $errors->first('sdt') }}</div>
+
+                <input type="text" name="diachi" placeholder="Địa chỉ" />
+                <div class="error-message">{{ $errors->first('diachi') }}</div>
+
+                <input type="email" name="email1" placeholder="Email" />
+                <div class="error-message">{{ $errors->first('email1') }}</div>
+                
                 <input type="password" name="password" placeholder="Password" />
                 <div class="error-message">{{ $errors->first('password') }}</div>
                 <button type="submit">Đăng kí</button>
@@ -343,10 +341,9 @@
             </div>
         </div>
     </div>
-    
     @include('sweetalert::alert')
 </body>
-@include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@9'])
+<script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
 <script>
     const signUpButton = document.getElementById('signUp');
     const signInButton = document.getElementById('signIn');

@@ -21,10 +21,10 @@ class adminMiddleware
             return $next($request);
         }elseif((Auth::user()->trangthai == 1)){
             Alert::error('Đăng nhập không thành công', 'Tài khoản bị vô hiệu hóa. Vui lòng liên hệ admin! ');
-                return redirect('dang-nhap');
+                return redirect()->back();
         }else{
             Alert::error('Đăng nhập không thành công', 'Tài khoản hoặc mật khẩu không chính xác! ');
-            return redirect()->route('dang-nhap');
+            return redirect()-back();
         }
         
     }

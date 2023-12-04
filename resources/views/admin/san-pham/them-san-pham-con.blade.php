@@ -54,16 +54,6 @@
                         <div class="error-message">{{ $errors->first('mau') }}</div>
                     </div>
                     <div class="form-group col-md-2">
-                        <label for="inputEmail4">Giá tiền</label>
-                        <input type="number" name="giatien" class="form-control" placeholder="Giá tiền">
-                        <div class="error-message">{{ $errors->first('giatien') }}</div>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="inputEmail4">Giảm giá</label>
-                        <input type="number" name="giamgia" class="form-control" placeholder="Giảm giá">
-                        <div class="error-message">{{ $errors->first('giamgia') }}</div>
-                    </div>
-                    <div class="form-group col-md-2">
                         <label for="inputEmail4">Số lượng</label>
                         <input type="number" name="soluong" class="form-control" placeholder="Số lượng">
                         <div class="error-message">{{ $errors->first('soluong') }}</div>

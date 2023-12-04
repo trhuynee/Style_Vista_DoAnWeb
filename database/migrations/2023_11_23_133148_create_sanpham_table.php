@@ -16,7 +16,9 @@ return new class extends Migration
             $table->string('tensanpham');
             $table->unsignedBigInteger('loaisp_id');
             $table->unsignedBigInteger('nh_id');
-            $table->string('mota');
+            $table->longText('mota');
+            $table->string('dongia');
+            $table->integer('giamgia');
             $table->tinyInteger('trangthai');
             $table->timestamps();
             $table->foreign('loaisp_id')->references('id')->on('loaisanpham');

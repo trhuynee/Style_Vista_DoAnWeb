@@ -39,11 +39,23 @@ class sanPhamController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'giatien' => 'required|numeric|min:1',
+            'giamgia' => 'required|numeric|max:100',
+        ], [
+            'giamgia.max' => 'Không được quá 100',
+            'giamgia.required' => 'Không được để trống',
+            'giamgia.numeric' => 'Phải là một số',
+            'giatien.min' => 'Phải lớn hơn 0',
+            'giatien.required' => 'Không được để trống',
+        ]);     
         $sanPham = new SanPham;
         $sanPham->tensanpham = $request->input('tensanpham');
         $sanPham->loaisp_id = $request->input('loaisanpham');
         $sanPham->nh_id = $request->input('nhanhieu');
         $sanPham->mota = $request->input('mota');
+        $sanPham->dongia = $request->input('giatien');
+        $sanPham->giamgia = $request->input('giamgia');
         $sanPham->trangthai = '0';
         $sanPham->save();
 
@@ -72,22 +84,15 @@ class sanPhamController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'giamgia' => 'required|numeric|max:100',
             'kichthuoc' => 'required',
             'mau' => 'required',
-            'giatien' => 'required|numeric|min:1',
             'soluong' => 'required|numeric|min:1',
         ], [
-            'giamgia.required' => 'Không được để trống',
-            'giamgia.numeric' => 'Phải là một số',
             'soluong.numeric' => 'Phải là một số',
             'giatien.numeric' => 'Phải là một số',
-            'giamgia.max' => 'Không được quá 100',
             'kichthuoc.required' => 'Không được để trống',
             'mau.required' => 'Không được để trống',
-            'giatien.required' => 'Không được để trống',
             'soluong.required' => 'Không được để trống',
-            'giatien.min' => 'Phải lớn hơn 0',
             'soluong.min' => 'Phải lớn hơn 0',
         ]);     
         if(ChiTietSanPham::where('mau_id', $request->input('mau'))->exists() && ChiTietSanPham::where('size', $request->input('kichthuoc'))->exists()){
@@ -98,9 +103,7 @@ class sanPhamController extends Controller
         $ChiTietSanPham->sanpham_id = $request->input('masp');
         $ChiTietSanPham->mau_id = $request->input('mau');
         $ChiTietSanPham->size = $request->input('kichthuoc');
-        $ChiTietSanPham->dongia = $request->input('giatien');;
         $ChiTietSanPham->soluong = $request->input('soluong');
-        $ChiTietSanPham->giamgia = $request->input('giamgia');;
         $ChiTietSanPham->trangthai = '0';
         $ChiTietSanPham->save();
         Alert()->success('Thành công','Thêm sản phẩm thành công.');
@@ -128,13 +131,21 @@ class sanPhamController extends Controller
      */
     public function trangchu()
     {
-        $ctsp = chiTietSanPham::all();
+        $ctsp = SanPham::all();
         return view('user.home', compact('ctsp'));
     }
     public function ctsanpham(string $id){
         $binhluan = binhluan::where('sanpham_id', $id)->get();
-        $ctsanpham = ChiTietSanPham::find($id);
-        return view('user.chi-tiet-san-pham', compact('ctsanpham','binhluan'));
+        $sanpham = SanPham::find($id);
+        $images = image::where('sp_id', $id)->get();
+        $giamgia = $sanpham->giamgia;
+        $dongia = $sanpham->dongia;
+        $giaGiam = ($dongia * $giamgia) / 100;
+        $gia = $dongia - $giaGiam;
+        $ChiTietSanPham = ChiTietSanPham::where('sanpham_id', $id)->get()->unique('mau.tenmau');
+        $ChiTietSanPham1 = ChiTietSanPham::where('sanpham_id', $id)->get();
+
+        return view('user.chi-tiet-san-pham', compact('images','ChiTietSanPham','ChiTietSanPham1','gia','binhluan', 'sanpham'));
     }
     public function binhluan(Request $request, string $id){
         $binhluan = new binhluan;

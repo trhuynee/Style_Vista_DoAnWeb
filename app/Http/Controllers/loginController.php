@@ -43,7 +43,7 @@ class loginController extends Controller
             }
         }else{
                 alert()->error('Đăng nhập không thành công', 'Tài khoản hoặc mật khẩu không chính xác! ');
-                return redirect('dang-nhap');
+                return redirect()->back();
         }
     }
 
@@ -60,27 +60,39 @@ class loginController extends Controller
      */
     public function register(Request $request)
     {
-     
         $request->validate([
             'hovaten' => 'required|max:30',
-            'email' => 'required|email',
+            'email1' => 'required|email|unique:user,email',
             'password' => 'required|min:6',
+            'sdt' => 'required|size:10',
+            'diachi' => 'required|max:255',
         ], [
+            'sdt.required' => 'Không được để trống',
+            'sdt.size' => 'Số điện thoại phải đủ 10 số',
+            'diachi.max' => 'Địa chỉ không quá 255 ký tự',
+            'email1.unique' => 'Email đã tồn tại',
+            'diachi.required' => 'Không được để trống',
             'hovaten.required' => 'Không được để trống',
-            'hovaten.max' => 'Mật khẩu không quá 30 ký tự',
-            'email.required' => 'Không được để trống',
-            'email.email' => 'Định dạng không hợp lệ',
+            'hovaten.max' => 'Họ và tên không quá 30 ký tự',
+            'email1.required' => 'Không được để trống',
+            'email1.email' => 'Định dạng không hợp lệ',
             'password.required' => 'Không được để trống',
             'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự',
-        ]);     
+        ]);
+    
         $password = $request->input('password');
         $user = new User();
-        $user->hovaten = $request->input('name');
-        $user->email = $request->input('email');
+        $user->sdt = $request->input('sdt');
         $user->password = Hash::make($password);
+        $user->hovaten = $request->input('hovaten');
+        $user->email = $request->input('email1');
+        $user->diachi = $request->input('diachi');
         $user->save();
+    
+        alert()->success('Đăng ký thành công', 'Bạn đã đăng ký thành công tài khoản');
         return redirect()->back();
     }
+    
 
     /**
      * Display the specified resource.

@@ -23,9 +23,9 @@ use Illuminate\Support\Facades\Hash;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Route::post('/dang-nhap',[loginController::class,'login'])->name('xu-li-dang-nhap');
 Route::get('/dang-nhap', function () {
-    return view('user.dang-nhap');
+    return view('login');
 })->name('dang-nhap');
 
 Route::get('/',[sanPhamController::class,'trangchu'])->name('trang-chu-nguoi-dung');

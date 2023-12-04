@@ -39,6 +39,22 @@
                         <div class="error-message">{{ $errors->first('nhanhieu') }}</div>
                     </div>
                 </div>
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="inputEmail4">Giá tiền</label>
+                        <input type="number" name="giatien" class="form-control" placeholder="Giá tiền">
+                        <div class="error-message">{{ $errors->first('giatien') }}</div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputEmail4">Giảm giá</label>
+                        <input type="number" name="giamgia" class="form-control" placeholder="Giảm giá">
+                        <div class="error-message">{{ $errors->first('giamgia') }}</div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="inputEmail4">Link tạo URL hình ảnh</label>
+                        <button class="form-control"><a href="https://www.base64-image.de/">Tạo URL</a></button>
+                    </div>
+                </div>
                 <div class="form-group">
                     <textarea id="editor" name="mota"></textarea>
                 </div>
@@ -91,7 +107,9 @@
     <script src="{{ asset('js/demo/datatables-demo.js') }}"></script>
 @endsection
 @section('css')
+
     <style>
+        
         .preview-image {
             max-width: 100px;
             max-height: 100px;
