@@ -117,8 +117,9 @@ class sanPhamController extends Controller
         $loaisanpham = LoaiSanPham::where('trangthai', 0)->get();
         $nhanhieu = NhanHieu::where('trangthai', 0)->get();
         $sanpham = SanPham::find($id);
+        $images = image::where('sp_id', $id)->get();
         $sanphamcon = ChiTietSanPham::where('sanpham_id', $id)->get();
-        return view('admin.san-pham.chi-tiet-san-pham', compact('sanpham', 'sanphamcon', 'loaisanpham', 'nhanhieu'));
+        return view('admin.san-pham.chi-tiet-san-pham', compact('sanpham', 'sanphamcon', 'loaisanpham', 'nhanhieu','images'));
     }
 
     /**
@@ -154,5 +155,11 @@ class sanPhamController extends Controller
         $binhluan->noidung= $request->input('noidung');
         $binhluan->save();
         return \redirect()->back(); 
+    }
+    public function xoaAnh(string $id){
+        $image = Image::find($id);
+        $image->delete();
+        Alert()->success('Thành công', 'Xóa hình ảnh thành công');
+        return \redirect()->back();
     }
 }
