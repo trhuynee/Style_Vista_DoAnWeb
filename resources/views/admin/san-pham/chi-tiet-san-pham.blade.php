@@ -14,7 +14,8 @@
                         </div>
                         <div id="collapseOne" class="panel-collapse collapse in">
                             <div class="card-body">
-                                <form action="#" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('admin.san-pham.xu-li-chi-tiet-san-pham', ['id' => $sanpham->id]) }}"
+                                    method="post">
                                     @csrf
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
@@ -53,21 +54,32 @@
                                             </select>
                                             <div class="error-message">{{ $errors->first('nhanhieu') }}</div>
                                         </div>
-
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-5">
+                                            <label for="inputEmail4">Giá tiền</label>
+                                            <input type="number" name="giatien" class="form-control"
+                                                value="{{ $sanpham->dongia }}">
+                                            <div class="error-message">{{ $errors->first('giatien') }}</div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="inputEmail4">Giảm giá</label>
+                                            <input type="number" name="giamgia" class="form-control"
+                                                value="{{ $sanpham->giamgia }}">
+                                            <div class="error-message">{{ $errors->first('giamgia') }}</div>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="inputEmail4">Link tạo URL hình ảnh</label>
+                                            <button class="form-control"><a href="https://www.base64-image.de/">Tạo
+                                                    URL</a></button>
+                                        </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-12">
                                             <textarea id="editor" name="mota">{{ $sanpham->mota }}</textarea>
                                         </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-12">
-                                            <label for="#">Hình sản phẩm</label>
-                                            <input type="file" name="images[]" id="images" multiple
-                                                accept="image/*">
-                                            <div id="preview-container"></div>
-                                        </div>
-                                    </div>
+
                                     <button type="submit" class="btn btn-primary">Xác nhận chỉnh sửa</button>
                                 </form>
                             </div>
@@ -154,9 +166,29 @@
                                                         @csrf
                                                         <button type="submit" class="btn btn-primary">Xóa hình</button>
                                                     </form>
+                                                    <form
+                                                        action="{{ route('admin.san-pham.xu-li-thay-hinh', ['id' => $item->id]) }}"
+                                                        method="POST" enctype="multipart/form-data">
+                                                        @csrf
+                                                        <input type="file" name="image" id="image">
+                                                        <button type="submit" class="btn btn-primary">Thay thế</button>
+                                                    </form>
                                                 </div>
                                             @endforeach
-                                            
+
+                                        </div>
+                                        <div class="form-row">
+                                            <form
+                                                action="{{ route('admin.san-pham.xu-li-them-anh', ['id' => $sanpham->id]) }}"
+                                                method="post" enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="form-group col-md-12">
+                                                    <label for="#">Hình sản phẩm</label>
+                                                    <input type="file" name="images[]" id="images" multiple
+                                                        accept="image/*">
+                                                    <button type="submit" class="btn btn-primary">Thêm hình</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -228,8 +260,6 @@
                             <th>Màu sắc</th>
                             <th>Kích thước</th>
                             <th>Số lượng</th>
-                            <th>Giá tiền</th>
-                            <th>Giảm giá</th>
                             <th>Trạng thái</th>
                             <th>Chức năng</th>
                         </tr>
@@ -240,8 +270,6 @@
                             <th>Màu sắc</th>
                             <th>Kích thước</th>
                             <th>Số lượng</th>
-                            <th>Giá tiền</th>
-                            <th>Giảm giá</th>
                             <th>Trạng thái</th>
                             <th>Chức năng</th>
                         </tr>
@@ -263,8 +291,6 @@
                                     <td>E</td>
                                 @endif
                                 <td>{{ $item->soluong }}</td>
-                                <td>{{ $item->dongia }}</td>
-                                <td>{{ $item->giamgia }}%</td>
                                 <td>
                                     @if ($item->trangthai == 0)
                                         Xuất bản

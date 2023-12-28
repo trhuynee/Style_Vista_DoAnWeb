@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap"
         rel="stylesheet">
 
-    <title>STYLE VISTA SHOP</title>
+    <title>@yield('title')</title>
 
 
     <!-- Additional CSS Files -->
@@ -47,7 +47,7 @@
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
                         <a href="/" class="logo">
-                            <img src="{{asset('img/logo.png')}}">
+                            <img src="{{ asset('img/logo.png') }}">
                         </a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
@@ -59,8 +59,20 @@
                             <li class="scroll-to-section"><a href="lien-he">Liên hệ</a></li>
                             <li class="scroll-to-section"><a href="gio-hang"><i class="fa fa-shopping-cart"
                                         style="font-size:20px"></i></a> </li>
-                            <li class="scroll-to-section"><a href="dang-nhap"><i class="fa fa-user"></i>{{session('name')}}</a></li>
-                            <li class="scroll-to-section"><a href="#"><i class="fa fa-heart-o" style="font-size:16px;"></i></a></li>
+                            <?php
+                            $kt = Auth::check();
+                            ?>
+                            @if ($kt)
+                                <li class="scroll-to-section"><a
+                                        href="{{ route('khach-hang.trang-thong-tin-khach-hang') }}"><i
+                                            class="fa fa-user"></i>{{ session('name') }}</a></li>
+                            @else
+                                <li class="scroll-to-section"><a
+                                        href="{{ route('dang-nhap') }}"><i
+                                            class="fa fa-user"></i>Đăng nhập</a></li>
+                            @endif
+                            <li class="scroll-to-section"><a href="#"><i class="fa fa-heart-o"
+                                        style="font-size:16px;"></i></a></li>
                         </ul>
                         <a class='menu-trigger'>
                             <span>Menu</span>
@@ -87,13 +99,13 @@
             <!-- The slideshow -->
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="{{asset('img/banner-1.png')}}" alt="" class="w-100">
+                    <img src="{{ asset('img/banner-1.png') }}" alt="" class="w-100">
                 </div>
                 <div class="carousel-item">
-                    <img src="{{asset('img/banner-2.png')}}" alt="" class="w-100">
+                    <img src="{{ asset('img/banner-2.png') }}" alt="" class="w-100">
                 </div>
                 <div class="carousel-item">
-                    <img src="{{asset('img/banner-3.png')}}" alt="" class="w-100">
+                    <img src="{{ asset('img/banner-3.png') }}" alt="" class="w-100">
                 </div>
             </div>
 
@@ -106,7 +118,7 @@
             </a>
 
         </div>
-        
+
     </div>
     @yield('content')
     <!-- ***** Main Banner Area End ***** -->

@@ -42,12 +42,23 @@ class sanPhamController extends Controller
         $request->validate([
             'giatien' => 'required|numeric|min:1',
             'giamgia' => 'required|numeric|max:100',
+            'tensanpham' => 'required|unique:sanpham,tensanpham',
+            'loaisanpham' => 'required',
+            'nhanhieu' => 'required',
+            'mota' => 'required',
+
         ], [
             'giamgia.max' => 'Không được quá 100',
             'giamgia.required' => 'Không được để trống',
             'giamgia.numeric' => 'Phải là một số',
             'giatien.min' => 'Phải lớn hơn 0',
             'giatien.required' => 'Không được để trống',
+            'loaisanpham.required' => 'Không được để trống',
+            'nhanhieu.required' => 'Không được để trống',
+            'mota.required' => 'Không được để trống',
+            'tensanpham' => 'Không được để trống',
+            'tensanpham.unique' => 'Tên sản phẩm đã tồn tại',
+
         ]);     
         $sanPham = new SanPham;
         $sanPham->tensanpham = $request->input('tensanpham');
@@ -161,5 +172,60 @@ class sanPhamController extends Controller
         $image->delete();
         Alert()->success('Thành công', 'Xóa hình ảnh thành công');
         return \redirect()->back();
+    }
+    public function capNhatSanPham(Request $request, string $id){
+        $tensanpham = $request->input('tensanpham');
+        $loaisanpham = $request->input('loaisanpham');
+        $nhanhang = $request->input('nhanhieu');
+        $mota = $request->input('mota');
+        $dongia = $request->input('dongia');
+        $giamgia = $request->input('giamgia');
+        $tensanphamExists = SanPham::where('tensanpham', $tensanpham)->exists();
+        $loaisanphamExists = SanPham::where('loaisp_id', $loaisanpham)->exists();
+        $nhanhangExists = SanPham::where('nh_id', $nhanhang)->exists();
+        $motaExists = SanPham::where('mota', $mota)->exists();
+        $dongiaExists = SanPham::where('dongia', $dongia)->exists();
+        $giamgiaExists = SanPham::where('giamgia', $giamgia)->exists();
+
+        if ($tensanphamExists && $loaisanphamExists && $nhanhangExists && $motaExists) {
+            Alert()->error('Thất bại', 'Không có gì để cập nhật');
+            return \redirect()->back();
+        }else{
+            $sanpham = SanPham::find($id);
+            $sanpham->update($request->all());
+            Alert()->success('Thành công', 'Cập nhật sản phẩm thành công');
+            return \redirect()->back();
+        }
+
+    }
+    public function themAnh(string $id, Request $request){
+        foreach ($request->file('images') as $image) {
+            $filename = $image->getClientOriginalName();
+            $image->move(public_path('uploads'), $filename);
+            $hinhAnh = new Image;
+            $hinhAnh->sp_id = $id;
+            $hinhAnh->tenimage = 'uploads/' . $filename;
+            $hinhAnh->save(); 
+        }
+        Alert()->success('Thành công', 'Thêm ảnh sản phẩm thành công');
+        return \redirect()->back();
+    }
+    public function suaAnh(string $id, Request $request){
+        if ($request->hasFile('image')) {
+            $hinhAnh = $request->file('image');
+            $filename = time() . '.' . $hinhAnh->getClientOriginalExtension();
+            $hinhAnh->storeAs('public/uploads', $filename);
+            $hinhAnhUrl = '/storage/uploads/' . $filename;
+        } else {
+            $hinhAnhUrl = null;
+        }
+        $image = Image::find($id);
+        $image->tenimage = $hinhAnhUrl;
+        $image->save();
+        
+        
+        Alert()->success('Thành công', 'Sửa ảnh sản phẩm thành công');
+        return redirect()->back();
+        
     }
 }

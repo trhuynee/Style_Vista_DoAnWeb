@@ -58,12 +58,12 @@
                 <div class="form-group">
                     <textarea id="editor" name="mota"></textarea>
                 </div>
+                <div class="error-message">{{ $errors->first('mota') }}</div>
                 <div class="form-group col-md-4">
                     <label for="#">Hình sản phẩm</label>
                     <input type="file" name="images[]" id="images" multiple accept="image/*">
                     <div id="preview-container"></div>
                 </div>
-
                 <button type="submit" class="btn btn-primary">Xác nhận</button>
             </form>
         </div>

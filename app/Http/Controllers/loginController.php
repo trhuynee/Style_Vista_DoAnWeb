@@ -35,11 +35,13 @@ class loginController extends Controller
             'avatar'=>$user->avatar,
         ]);
             $name = $user->hovaten;
-            $phanQuyen = $user->phanQuyen;
+            $phanQuyen = $user->phanquyen;
             $chuyenDoi = intval($phanQuyen);
             if($chuyenDoi == 0 || $chuyenDoi == 1 && $ttt == 0){
                 alert()->success('Đăng nhập thành công', 'Chào mừng ' . $name . ' đến với trang quản trị');
                 return \redirect()->route('admin.trang-chu');
+            }elseif ($chuyenDoi == 2 && $ttt == 0) {
+                return \redirect()->route('khach-hang.trang-thong-tin-khach-hang');
             }
         }else{
                 alert()->error('Đăng nhập không thành công', 'Tài khoản hoặc mật khẩu không chính xác! ');

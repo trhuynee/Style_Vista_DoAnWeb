@@ -1,7 +1,9 @@
 @extends('layout.index')
 
 @section('title', 'Sản phẩm')
-
+@section('css')
+    <link rel="stylesheet" href="{{ asset('assets/css/chi-tiet-san-pham-ng-dung') }}">
+@endsection
 @section('content')
 
     <!-- ***** Product Area Starts ***** -->
@@ -37,67 +39,66 @@
                 </div>
                 <div class="col-lg-5">
                     <div class="right-content">
-                        <h4>{{ $sanpham->tensanpham }}</h4>
-                        <h4 class="price" style="color: red;">Giá giảm: {{ $gia }}₫</h4>
-                        <p class="price">Giá gốc: <s>{{ $sanpham->dongia }}₫</s></p>
-                        <ul class="stars">
-                            <li><i class="fa fa-heart-o" style="font-size:24px;"></i></li>
-                        </ul>
+                        <form action="{{route('khach-hang.xu-li-thanh-toan')}}" method="POST">
+                            @csrf
+                            <h4>{{ $sanpham->tensanpham }}</h4>
+                            <input name="idSP" value="{{ $sanpham->id }}" type="hidden">
+                            <input name="tenSP" value="{{ $sanpham->tensanpham }}" type="hidden">
+                            <input name="gia" value="{{ $gia }}" type="hidden">
+                            <h4 class="price" style="color: red;">Giá giảm: {{ $gia }}₫</h4>
+                            <p class="price">Giá gốc: <s>{{ $sanpham->dongia }}₫</s></p>
+                            <ul class="stars">
+                                <li><i class="fa fa-heart-o" style="font-size:24px;"></i></li>
+                            </ul>
 
-                        <div class="quantity-content">
-                            <div class="left-content">
-                                <h6>Màu sắc </h6>
-                            </div>
-                            <div class="right-content">
-                                <div class="btn-group">
-                                    @foreach ($ChiTietSanPham as $item)
-                                        <button type="button"
-                                            class="btn btn-outline-dark">{{ $item->mau->tenmau }}</button>
-                                    @endforeach
+                            <div class="quantity-content">
+                                <div class="left-content">
+                                    <h6>Màu sắc </h6>
+                                </div>
+                                <div class="right-content">
+                                    <select id="inputState" name="mau" class="form-control">
+                                        @foreach ($ChiTietSanPham as $item)
+                                            <option value="{{ $item->mau->id }}">{{ $item->mau->tenmau }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="left-content">
+                                    <h6>Kích thước </h6>
+                                </div>
+                                <div class="right-content">
+                                    <select id="inputState" name="kt" class="form-control">
+                                        @foreach ($ChiTietSanPham1 as $item)
+                                            <option value="{{ $item->size }}">
+                                                @if ($item->size == 0)
+                                                    A
+                                                @elseif ($item->size == 1)
+                                                    B
+                                                @elseif ($item->size == 2)
+                                                    C
+                                                @elseif ($item->size == 3)
+                                                    D
+                                                @elseif ($item->size == 4)
+                                                    E
+                                                @endif
+                                            </option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
+                                <div class="left-content">
+                                    <h6>Số lượng </h6>
+                                </div>
+                                <div class="right-content">
+                                    <input type="number" name="soluong" min="1" max="20" value="1">
                                 </div>
                             </div>
-                            <div class="left-content">
-                                <h6>Kích thước </h6>
-                            </div>
-                            <div class="right-content">
-                                <div class="btn-group">
-                                    @foreach ($ChiTietSanPham1 as $item)
-                                        <button type="button" class="btn btn-outline-dark">
-                                            @if ($item->size == 0)
-                                                A
-                                            @elseif ($item->size == 1)
-                                                B
-                                            @elseif ($item->size == 2)
-                                                C
-                                            @elseif ($item->size == 3)
-                                                D
-                                            @elseif ($item->size == 4)
-                                                E
-                                            @endif
-                                        </button>
-                                    @endforeach
-
+                            <div class="total">
+                                <div class="main-border-button">
+                                    <a href="#">Thêm vào giỏ hàng</a>
+                                    <button type="submit">Mua ngay</button>
                                 </div>
                             </div>
-                            <div class="left-content">
-                                <h6>Số lượng </h6>
-                            </div>
-                            <div class="right-content">
-                                <div class="quantity buttons_added">
-                                    <input type="button" value="-" class="minus"><input type="number" step="1"
-                                        min="1" max="" name="quantity" value="1" title="Qty"
-                                        class="input-text qty text" size="4" pattern="" inputmode=""><input
-                                        type="button" value="+" class="plus">
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="total">
-                            <div class="main-border-button">
-                                <a href="#">Thêm vào giỏ hàng</a>
-                                <a href="#">Mua ngay</a>
-                            </div>
-                        </div>
+                        </form>
                         <?php
                         $avatar = session('avatar');
                         ?>
