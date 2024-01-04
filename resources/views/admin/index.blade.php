@@ -56,7 +56,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{route('admin.thong-ke.thong-ke-don-hang')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Thống kê</span></a>
             </li>
@@ -167,13 +167,17 @@
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Đơn hàng</span>
                 </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages"
+                    data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('admin.don-hang.don-hang-moi') }}">Đơn hàng mới</a>
-                        <a class="collapse-item" href="{{ route('admin.don-hang.don-hang-dang-giao') }}">Đơn hàng đang giao</a>
+                        <a class="collapse-item" href="{{ route('admin.don-hang.don-hang-dang-giao') }}">Đơn hàng
+                            đang giao</a>
                         <div class="collapse-divider"></div>
-                        <a class="collapse-item" href="{{ route('admin.don-hang.don-hang-hoan-tat') }}">Đơn hàng hoàn tất</a>
-                        <a class="collapse-item" href="{{ route('admin.don-hang.don-hang-hoan-tra') }}">Đơn hàng hoàn trả</a>
+                        <a class="collapse-item" href="{{ route('admin.don-hang.don-hang-hoan-tat') }}">Đơn hàng
+                            hoàn tất</a>
+                        <a class="collapse-item" href="{{ route('admin.don-hang.don-hang-hoan-tra') }}">Đơn hàng
+                            hoàn trả</a>
                         <a class="collapse-item" href="{{ route('admin.don-hang.don-hang-huy') }}">Đơn hàng hủy</a>
                     </div>
                 </div>
@@ -288,6 +292,8 @@
                                                     Đơn hàng bị hủy
                                                 @elseif ($item->ttvanchuyen == 4)
                                                     Đơn hàng hoàn trả
+                                                @else
+                                                    Đơn hàng bị hủy từ shop
                                                 @endif
                                                 <br>
                                             </span>
@@ -296,7 +302,8 @@
                                         </div>
                                     </a>
                                 @endforeach
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Hiển thị tất cả</a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Hiển thị
+                                    tất cả</a>
                             </div>
                         </li>
 

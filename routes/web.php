@@ -9,7 +9,7 @@ use App\Http\controllers\mauController;
 use App\Http\controllers\donHangController;
 use App\Http\controllers\nhanHieuController;
 use App\Http\controllers\loaiSanPhamController;
-use App\Http\controllers\muaHangController;
+use App\Http\controllers\thongKeController;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -123,6 +123,10 @@ Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => 'admin'], 
         Route::get('/hoan-tra', [donHangController::class, 'donHangHoanTra'])->name('don-hang-hoan-tra');
         Route::get('/chi-tiet-don-hang/{id}', [donHangController::class, 'show'])->name('chi-tiet-don-hang');
 
+    });
+    Route::group(['prefix' => 'thong-ke', 'as' => 'thong-ke.'], function(){
+        Route::get('/don-hang', [thongKeController::class, 'index'])->name('thong-ke-don-hang');
+        Route::post('/don-hang', [thongKeController::class, 'thongKeDonHang'])->name('xu-li-thong-ke-don-hang');
     });
 });
 /** 

@@ -22,7 +22,10 @@ class CTHDB extends Model
     {
         return $this->hasOne(SanPham::class, 'id', 'sp_id');
     }
-
+    public function hoadonban()
+    {
+        return $this->hasMany(hoadonban::class, 'id', 'ma_hd');
+    }
     public function chiTietSanPham()
     {
         return $this->belongsTo(ChiTietSanPham::class, 'chitietietsp_id', 'id');
