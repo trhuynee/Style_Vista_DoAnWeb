@@ -15,6 +15,7 @@ class SanPham extends Model
         'nh_id',
         'mota',
         'trangthai',
+
     ];
     public function nhanhieu()
     {
@@ -24,5 +25,8 @@ class SanPham extends Model
     {
         return $this->belongsTo(LoaiSanPham::class, 'loaisp_id', 'id');
     }
-    
+    public function images()
+    {
+        return $this->hasMany(Image::class, 'sp_id');
+    }
 }

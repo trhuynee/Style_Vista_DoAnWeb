@@ -15,20 +15,24 @@
                         @php
                             $dem = 0;
                         @endphp
-                        @foreach ($images as $item)
-                            @if ($dem == 0)
-                                <img src="{{ asset($item->tenimage) }}" alt="">
-                                @php
-                                    $dem++;
-                                @endphp
-                            @endif
-                        @endforeach
-                        <div class="row">
+
+                        <div class="container">
                             @foreach ($images as $item)
-                                <div class="col-lg-3">
-                                    <img src="{{ asset($item->tenimage) }}" alt="">
-                                </div>
+                                @if ($dem == 0)
+                                    <img class="main-image" src="{{ asset($item->tenimage) }}" alt="">
+                                    @php
+                                        $dem++;
+                                    @endphp
+                                @endif
                             @endforeach
+
+                            <div class="row">
+                                @foreach ($images as $item)
+                                    <div class="col-lg-3">
+                                        <img class="thumbnail" src="{{ asset($item->tenimage) }}" alt="">
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                     <span>Mô tả</span>
@@ -39,51 +43,52 @@
                 </div>
                 <div class="col-lg-5">
                     <div class="right-content">
-                        <form action="{{route('khach-hang.xu-li-thanh-toan')}}" method="POST">
+                        {{-- <form action="{{ route('khach-hang.xu-li-thanh-toan') }}" method="POST"> --}}
+                        <form action="" method="POST">
                             @csrf
-                            <h4>{{ $sanpham->tensanpham }}</h4>
-                            <input name="idSP" value="{{ $sanpham->id }}" type="hidden">
-                            <input name="tenSP" value="{{ $sanpham->tensanpham }}" type="hidden">
-                            <input name="gia" value="{{ $gia }}" type="hidden">
-                            <h4 class="price" style="color: red;">Giá giảm: {{ $gia }}₫</h4>
-                            <p class="price">Giá gốc: <s>{{ $sanpham->dongia }}₫</s></p>
-                            <ul class="stars">
-                                <li><i class="fa fa-heart-o" style="font-size:24px;"></i></li>
-                            </ul>
-
+                            <div class="product-details">
+                                <h4>{{ $sanpham->tensanpham }}</h4>
+                                <div class="price-section">
+                                    <h5 class="discounted-price">Giá giảm: {{ $gia }}₫</h5>
+                                    <p class="original-price">Giá gốc: <s>{{ $sanpham->dongia }}₫</s></p>
+                                </div>
+                            </div>
                             <div class="quantity-content">
                                 <div class="left-content">
                                     <h6>Màu sắc </h6>
                                 </div>
                                 <div class="right-content">
                                     <select id="inputState" name="mau" class="form-control">
+                                        <option value="">-- Chọn màu --</option>
                                         @foreach ($ChiTietSanPham as $item)
                                             <option value="{{ $item->mau->id }}">{{ $item->mau->tenmau }}</option>
                                         @endforeach
                                     </select>
                                 </div>
+
                                 <div class="left-content">
                                     <h6>Kích thước </h6>
                                 </div>
                                 <div class="right-content">
                                     <select id="inputState" name="kt" class="form-control">
+                                        <option value="">-- Chọn size --</option>
                                         @foreach ($ChiTietSanPham1 as $item)
                                             <option value="{{ $item->size }}">
                                                 @if ($item->size == 0)
-                                                    A
+                                                    S
                                                 @elseif ($item->size == 1)
-                                                    B
+                                                    M
                                                 @elseif ($item->size == 2)
-                                                    C
+                                                    L
                                                 @elseif ($item->size == 3)
-                                                    D
+                                                    XL
                                                 @elseif ($item->size == 4)
-                                                    E
+                                                    2XL
                                                 @endif
                                             </option>
                                         @endforeach
                                     </select>
-
+                                    <div class="error-message">{{ $errors->first('kt') }}</div>
                                 </div>
                                 <div class="left-content">
                                     <h6>Số lượng </h6>
@@ -91,13 +96,21 @@
                                 <div class="right-content">
                                     <input type="number" name="soluong" min="1" max="20" value="1">
                                 </div>
+                                <div class="error-message">{{ $errors->first('soluong') }}</div>
                             </div>
                             <div class="total">
                                 <div class="main-border-button">
-                                    <a href="#">Thêm vào giỏ hàng</a>
-                                    <button type="submit">Mua ngay</button>
+                                    @if (Auth::check())
+                                        <a onclick="addToCart()" href="#" id="add-to-cart-btn"
+                                            data-sanpham-id="{{ $sanpham->id }}">Thêm vào giỏ hàng</a>
+                                    @else
+                                        <a href="/dang-nhap">Đăng nhập</a>
+                                    @endif
+                                    <a href="/thanh-toan">Mua ngay</a>
                                 </div>
                             </div>
+
+
                         </form>
                         <?php
                         $avatar = session('avatar');
@@ -118,7 +131,8 @@
                                                         height="40" />
                                                 @endif
                                                 <div>
-                                                    <h6 class="fw-bold text-primary mb-1">{{ $item->user->hovaten }}</h6>
+                                                    <h6 class="fw-bold text-primary mb-1">{{ $item->user->hovaten }}
+                                                    </h6>
                                                     <p class="text-muted small mb-0">
                                                         {{ $item->created_at }}
                                                     </p>
@@ -182,6 +196,97 @@
             </div>
         </div>
     </section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <!-- ***** Product Area Ends ***** -->
+    <script>
+        function addToCart() {
+            event.preventDefault();
+
+            var productId = $('#add-to-cart-btn').data('sanpham-id');
+
+            // Kiểm tra đăng nhập
+            @if (Auth::check())
+                // Gửi yêu cầu AJAX để thêm sản phẩm vào giỏ hàng
+                $.ajax({
+                    url: '/them-vao-gio-hang/' + productId,
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        alert(response.message);
+                        // Chuyển hướng đến trang giỏ hàng sau khi thêm vào giỏ hàng
+                        window.location.href = '/gio-hang';
+                    },
+                    error: function(error) {
+                        console.error('Lỗi khi thêm sản phẩm vào giỏ hàng.');
+                    }
+                });
+            @else
+                // Chuyển hướng đến trang đăng nhập
+                window.location.href = '/dang-nhap';
+            @endif
+        }
+
+        $(document).ready(function() {
+            $('#add-to-cart-btn').on('click', addToCart);
+        });
+    </script>
+    {{-- Thông báo không bỏ trống màu, size, số lượng
+    <script>
+        function addToCart() {
+            var selectedMau = document.getElementById('inputMau').value;
+            var selectedSize = document.getElementById('inputSize').value;
+            var selectedSoLuong = document.getElementById('inputSoLuong').value;
+
+            // Kiểm tra nếu màu, size, hoặc số lượng chưa được chọn
+            if (selectedMau === "") {
+                document.getElementById('errorMau').innerHTML = "Vui lòng chọn màu.";
+                return;
+            } else {
+                document.getElementById('errorMau').innerHTML = "";
+            }
+
+            if (selectedSize === "") {
+                document.getElementById('errorSize').innerHTML = "Vui lòng chọn size.";
+                return;
+            } else {
+                document.getElementById('errorSize').innerHTML = "";
+            }
+
+            if (selectedSoLuong === "") {
+                document.getElementById('errorSoLuong').innerHTML = "Vui lòng nhập số lượng.";
+                return;
+            } else {
+                document.getElementById('errorSoLuong').innerHTML = "";
+            }
+
+            // Gọi hàm thêm vào giỏ hàng nếu mọi thứ đều hợp lệ
+            addToCartAjax();
+        }
+
+        function addToCartAjax() {
+            // Gửi yêu cầu AJAX để thêm sản phẩm vào giỏ hàng
+            $.ajax({
+                url: '/them-vao-gio-hang/' + productId,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    alert(response.message);
+                    // Chuyển hướng đến trang giỏ hàng sau khi thêm vào giỏ hàng
+                    window.location.href = '/gio-hang';
+                },
+                error: function(error) {
+                    console.error('Lỗi khi thêm sản phẩm vào giỏ hàng.');
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            $('#add-to-cart-btn').on('click', addToCart);
+        });
+    </script> --}}
+
 @endsection

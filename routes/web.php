@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\danhSachYeuThichController;
 use Illuminate\Support\Facades\Route;
 use App\Http\controllers\loginController;
 use App\Http\controllers\sanPhamController;
@@ -10,7 +11,8 @@ use App\Http\controllers\donHangController;
 use App\Http\controllers\nhanHieuController;
 use App\Http\controllers\loaiSanPhamController;
 use App\Http\controllers\thongKeController;
-
+use App\Http\controllers\muaHangController;
+use App\Http\controllers\gioHangController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -46,9 +48,16 @@ Route::get('/san-pham', function () {
 Route::get('/lien-he', function () {
     return view('user.lien-he');
 })->name('trang-lien-he');
+
 Route::get('/404', function () {
     return view('404');
 })->name('trang-loi');
+
+
+
+// Route::get('/danh-sach-yeu-thich', [danhSachYeuThichController::class, 'showDSYT'])->name('trang-danh-sach-yeu-thich');
+// web.php
+Route::get('/danh-sach-yeu-thich/{id}', [danhSachYeuThichController::class, 'showDSYT'])->name('trang-danh-sach-yeu-thich');
 
 /**
  * đăng xuất
@@ -96,10 +105,9 @@ Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => 'admin'], 
         Route::post('/them-san-pham-con/{id}', [sanPhamController::class, 'update'])->name('xu-li-them-san-pham-con');
         Route::post('/xoa-hinh/{id}', [sanPhamController::class, 'xoaAnh'])->name('xu-li-xoa-hinh');
         Route::post('/them-anh/{id}', [sanPhamController::class, 'themAnh'])->name('xu-li-them-anh');
+
         Route::post('/chinh-sua-san-pham/{id}', [sanPhamController::class, 'capNhatSanPham'])->name('xu-li-chi-tiet-san-pham');
         Route::post('/sua-anh/{id}', [sanPhamController::class, 'suaAnh'])->name('xu-li-thay-hinh');
-
-
     });
     Route::group(['prefix' => '/loai-san-pham', 'as' => 'loai-san-pham.'], function () {
         Route::get('/loai-san-pham', [loaiSanPhamController::class, 'index'])->name('loai-san-pham');
@@ -113,7 +121,7 @@ Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => 'admin'], 
         Route::get('/nhan-hieu-san-pham', [nhanHieuController::class, 'index'])->name('nhan-hieu-san-pham');
         Route::post('/nhan-hieu-san-pham/them-nhan-hieu-san-pham', [nhanHieuController::class, 'store'])->name('them-nhan-hieu-san-pham');
     });
-    Route::group(['prefix' => 'don-hang', 'as' => 'don-hang.'], function(){
+    Route::group(['prefix' => 'don-hang', 'as' => 'don-hang.'], function () {
         Route::get('/moi', [donHangController::class, 'donHangMoi'])->name('don-hang-moi');
         Route::get('/huy', [donHangController::class, 'donHangHuy'])->name('don-hang-huy');
         Route::post('/huy/{id}', [donHangController::class, 'giaoDonHang'])->name('xu-li-giao-don-hang');
@@ -122,40 +130,42 @@ Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => 'admin'], 
         Route::get('/hoan-tat', [donHangController::class, 'donHangHoanTat'])->name('don-hang-hoan-tat');
         Route::get('/hoan-tra', [donHangController::class, 'donHangHoanTra'])->name('don-hang-hoan-tra');
         Route::get('/chi-tiet-don-hang/{id}', [donHangController::class, 'show'])->name('chi-tiet-don-hang');
-
     });
-    Route::group(['prefix' => 'thong-ke', 'as' => 'thong-ke.'], function(){
+    Route::group(['prefix' => 'thong-ke', 'as' => 'thong-ke.'], function () {
         Route::get('/don-hang', [thongKeController::class, 'index'])->name('thong-ke-don-hang');
         Route::post('/don-hang', [thongKeController::class, 'thongKeDonHang'])->name('xu-li-thong-ke-don-hang');
     });
 });
-/** 
+/**
  * khách hàng
-*/
+ */
 
-Route::group(['prefix' => '/khach-hang', 'as' => 'khach-hang.', 'middleware' => 'user'], function () {
-    Route::get('/thong-tin-khach-hang', function () {
-        return view('user.thong-tin-khach-hang');
-    })->name('trang-thong-tin-khach-hang');
-    
-    
-    Route::get('/gio-hang', function () {
-        return view('user.gio-hang');
-    })->name('trang-gio-hang');
-    
-    Route::get('/thong-tin-khach-hang/don-hang', [muaHangController::class, 'show'])->name('trang-don-hang');
-    
-    Route::get('/thong-tin-khach-hang/doi-mat-khau', function () {
+
+Route::group(['prefix' => '/', 'as' => 'khach-hang.', 'middleware' => 'user'], function () {
+    // Route::get('/thong-tin-khach-hang', function () {
+    //     return view('user.thong-tin-khach-hang');
+    // })->name('trang-thong-tin-khach-hang');
+
+    Route::get('/don-hang', [muaHangController::class, 'show'])->name('trang-don-hang');
+
+    Route::get('/doi-mat-khau', function () {
         return view('user.doi-mat-khau');
     })->name('trang-doi-mat-khau');
-    
-    Route::get('/thong-tin-khach-hang/dia-chi', [muaHangController::class , 'diaChiIndex'])->name('trang-dia-chi');
-    Route::post('/thanh-toan', [muaHangController::class, 'create'])->name('xu-li-thanh-toan');
+
+    Route::get('/dia-chi', [muaHangController::class, 'diaChiIndex'])->name('trang-dia-chi');
+
     Route::post('/xu-li-thanh-toan-dat-hang', [muaHangController::class, 'store'])->name('xu-li-thanh-toan-1');
     Route::post('/huy-hang/{id}', [muaHangController::class, 'huyHang'])->name('xu-li-huy-hang');
     Route::post('/xu-li-dia-chi', [muaHangController::class, 'themDiaChi'])->name('xu-li-dia-chi');
 
+    Route::get('/thong-tin-khach-hang', [taiKhoanKhachHangController::class, 'thongtinkh'])->name('trang-thong-tin-khach-hang');
 
+    Route::get('/gio-hang', [gioHangController::class, 'showCart'])->name('trang-gio-hang');
+    Route::post('/them-vao-gio-hang/{id}', [gioHangController::class, 'addToCart'])->name('them-vao-gio-hang');
+    Route::get('/thanh-toan', [muaHangController::class, 'create'])->name('xu-li-thanh-toan');
+    Route::get('/danh-sach-san-pham', [sanPhamController::class, 'dssp'])->name('trang-danh-sach-san-pham');
+
+    // Route::post('/danh-sach-yeu-thich', [danhSachYeuThichController::class, 'showDSYT'])->name('trang-danh-sach-yeu-thich');
 });
 /**
  * hết

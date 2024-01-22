@@ -6,7 +6,7 @@
             <h6 class="m-0 font-weight-bold text-primary">Thêm mới màu sản phẩm</h6>
         </div>
         <div class="card-body">
-            <form action="{{route('admin.mau-san-pham.them-mau-san-pham')}}" method="POST">
+            <form action="{{ route('admin.mau-san-pham.them-mau-san-pham') }}" method="POST">
                 @csrf
                 <div class="form-row">
                     <div class="form-group col-md-9">
@@ -56,7 +56,7 @@
                     <tbody>
                         @foreach ($mau as $item)
                             <tr>
-                                <td>{{$item->tenmau}}</td>
+                                <td>{{ $item->tenmau }}</td>
                                 <td>
                                     @if ($item->trangthai == 0)
                                         Xuất bản
@@ -64,8 +64,8 @@
                                         Nháp
                                     @endif
                                 </td>
-                                <td>{{$item->created_at}}</td>
-                                <td>{{$item->updated_at}}</td>
+                                <td>{{ $item->created_at }}</td>
+                                <td>{{ $item->updated_at }}</td>
                                 <td>
                                     <a href="#">Xem chi tiết</a>
                                 </td>

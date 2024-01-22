@@ -1,12 +1,12 @@
 @extends('admin.index')
-@section('title', 'loại sản phẩm')
+@section('title', 'Loại sản phẩm')
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Thêm mới loại sản phẩm</h6>
         </div>
         <div class="card-body">
-            <form action="{{route('admin.loai-san-pham.them-loai-san-pham')}}" method="POST">
+            <form action="{{ route('admin.loai-san-pham.them-loai-san-pham') }}" method="POST">
                 @csrf
                 <div class="form-row">
                     <div class="form-group col-md-9">
@@ -44,7 +44,7 @@
                             <th>Chức năng</th>
                         </tr>
                     </thead>
-                    <tfoot>
+                    {{-- <tfoot>
                         <tr>
                             <th>Tên loại sản phẩm</th>
                             <th>Trạng thái</th>
@@ -52,11 +52,11 @@
                             <th>Ngày cập nhật</th>
                             <th>Chức năng</th>
                         </tr>
-                    </tfoot>
+                    </tfoot> --}}
                     <tbody>
                         @foreach ($loaiSanPham as $item)
                             <tr>
-                                <td>{{$item->tenloaisp}}</td>
+                                <td>{{ $item->tenloaisp }}</td>
                                 <td>
                                     @if ($item->trangthai == 0)
                                         Xuất bản
@@ -64,8 +64,8 @@
                                         Nháp
                                     @endif
                                 </td>
-                                <td>{{$item->created_at}}</td>
-                                <td>{{$item->updated_at}}</td>
+                                <td>{{ $item->created_at }}</td>
+                                <td>{{ $item->updated_at }}</td>
                                 <td>
                                     <a href="#">Xem chi tiết</a>
                                 </td>

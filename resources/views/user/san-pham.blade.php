@@ -1,6 +1,6 @@
 @extends('layout.index')
 
-@section('title', 'Sản phẩm')
+@section('title', 'Sản phẩm')
 
 @section('content')
     <!-- ***** Products Area Starts ***** -->
@@ -17,207 +17,29 @@
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-lg-4">
-                    <div class="item">
-                        <div class="thumb">
-                            <div class="hover-content">
-                                <ul>
-                                    <li><a href="chi-tiet-san-pham"><i class="fa fa-eye"></i></a></li>
-                                    <li><a href="gio-hang"><i class="fa fa-shopping-cart"></i></a></li>
-                                </ul>
+                @foreach ($sanPham as $sanpham)
+                    <div class="col-lg-4">
+                        <div class="item">
+                            <div class="thumb">
+                                <div class="hover-content">
+                                    <ul>
+                                        <li><a href="/chi-tiet-san-pham/{{ $sanpham->id }}"><i class="fa fa-eye"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                @foreach ($sanpham->images as $item)
+                                    @if ($loop->first)
+                                        <img class="main-image" src="{{ asset($item->tenimage) }}" alt="">
+                                    @endif
+                                @endforeach
                             </div>
-                            <img src="assets/images/men-01.jpg" alt="">
-                        </div>
-                        <div class="down-content">
-                            <h4>Tên sản phẩm</h4>
-                            <span>Giá</span>
-                            <ul class="stars">
-                                <li><i class="fa fa-heart-o" style="font-size:24px;"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="item">
-                        <div class="thumb">
-                            <div class="hover-content">
-                                <ul>
-                                    <li><a href="chi-tiet-san-pham"><i class="fa fa-eye"></i></a></li>
-                                    <li><a href="gio-hang"><i class="fa fa-shopping-cart"></i></a></li>
-                                </ul>
+                            <div class="down-content">
+                                <h4>{{ $sanpham->tensanpham }}</h4>
+                                <span><s>{{ $sanpham->dongia }}₫</s></span>
                             </div>
-                            <img src="assets/images/men-01.jpg" alt="">
-                        </div>
-                        <div class="down-content">
-                            <h4>Tên sản phẩm</h4>
-                            <span>Giá</span>
-                            <ul class="stars">
-                                <li><i class="fa fa-heart-o" style="font-size:24px;"></i></li>
-                            </ul>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="item">
-                        <div class="thumb">
-                            <div class="hover-content">
-                                <ul>
-                                    <li><a href="chi-tiet-san-pham"><i class="fa fa-eye"></i></a></li>
-                                    <li><a href="gio-hang"><i class="fa fa-shopping-cart"></i></a></li>
-                                </ul>
-                            </div>
-                            <img src="assets/images/men-01.jpg" alt="">
-                        </div>
-                        <div class="down-content">
-                            <h4>Tên sản phẩm</h4>
-                            <span>Giá</span>
-                            <ul class="stars">
-                                <li><i class="fa fa-heart-o" style="font-size:24px;"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="item">
-                        <div class="thumb">
-                            <div class="hover-content">
-                                <ul>
-                                    <li><a href="chi-tiet-san-pham"><i class="fa fa-eye"></i></a></li>
-                                    <li><a href="gio-hang"><i class="fa fa-shopping-cart"></i></a></li>
-                                </ul>
-                            </div>
-                            <img src="assets/images/men-01.jpg" alt="">
-                        </div>
-                        <div class="down-content">
-                            <h4>Tên sản phẩm</h4>
-                            <span>Giá</span>
-                            <ul class="stars">
-                                <li><i class="fa fa-heart-o" style="font-size:24px;"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-               <div class="col-lg-4">
-                    <div class="item">
-                        <div class="thumb">
-                            <div class="hover-content">
-                                <ul>
-                                    <li><a href="chi-tiet-san-pham"><i class="fa fa-eye"></i></a></li>
-                                    <li><a href="gio-hang"><i class="fa fa-shopping-cart"></i></a></li>
-                                </ul>
-                            </div>
-                            <img src="assets/images/men-01.jpg" alt="">
-                        </div>
-                        <div class="down-content">
-                            <h4>Tên sản phẩm</h4>
-                            <span>Giá</span>
-                            <ul class="stars">
-                                <li><i class="fa fa-heart-o" style="font-size:24px;"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="item">
-                        <div class="thumb">
-                            <div class="hover-content">
-                                <ul>
-                                    <li><a href="chi-tiet-san-pham"><i class="fa fa-eye"></i></a></li>
-                                    <li><a href="gio-hang"><i class="fa fa-shopping-cart"></i></a></li>
-                                </ul>
-                            </div>
-                            <img src="assets/images/men-01.jpg" alt="">
-                        </div>
-                        <div class="down-content">
-                            <h4>Tên sản phẩm</h4>
-                            <span>Giá</span>
-                            <ul class="stars">
-                                <li><i class="fa fa-heart-o" style="font-size:24px;"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="item">
-                        <div class="thumb">
-                            <div class="hover-content">
-                                <ul>
-                                    <li><a href="chi-tiet-san-pham"><i class="fa fa-eye"></i></a></li>
-                                    <li><a href="gio-hang"><i class="fa fa-shopping-cart"></i></a></li>
-                                </ul>
-                            </div>
-                            <img src="assets/images/men-01.jpg" alt="">
-                        </div>
-                        <div class="down-content">
-                            <h4>Tên sản phẩm</h4>
-                            <span>Giá</span>
-                            <ul class="stars">
-                                <li><i class="fa fa-heart-o" style="font-size:24px;"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="item">
-                        <div class="thumb">
-                            <div class="hover-content">
-                                <ul>
-                                    <li><a href="chi-tiet-san-pham"><i class="fa fa-eye"></i></a></li>
-                                    <li><a href="gio-hang"><i class="fa fa-shopping-cart"></i></a></li>
-                                </ul>
-                            </div>
-                            <img src="assets/images/men-01.jpg" alt="">
-                        </div>
-                        <div class="down-content">
-                            <h4>Tên sản phẩm</h4>
-                            <span>Giá</span>
-                            <ul class="stars">
-                                <li><i class="fa fa-heart-o" style="font-size:24px;"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-               <div class="col-lg-4">
-                    <div class="item">
-                        <div class="thumb">
-                            <div class="hover-content">
-                                <ul>
-                                    <li><a href="chi-tiet-san-pham"><i class="fa fa-eye"></i></a></li>
-                                    <li><a href="gio-hang"><i class="fa fa-shopping-cart"></i></a></li>
-                                </ul>
-                            </div>
-                            <img src="assets/images/men-01.jpg" alt="">
-                        </div>
-                        <div class="down-content">
-                            <h4>Tên sản phẩm</h4>
-                            <span>Giá</span>
-                            <ul class="stars">
-                                <li><i class="fa fa-heart-o" style="font-size:24px;"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="pagination">
-                        <ul>
-                            <li>
-                                <a href="#">1</a>
-                            </li>
-                            <li class="active">
-                                <a href="#">2</a>
-                            </li>
-                            <li>
-                                <a href="#">3</a>
-                            </li>
-                            <li>
-                                <a href="#">4</a>
-                            </li>
-                            <li>
-                                <a href="#">></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>

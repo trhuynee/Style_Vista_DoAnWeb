@@ -1,17 +1,18 @@
 @extends('admin.index')
-@section('title', 'nhãn hiệu sản phẩm')
+@section('title', 'Nhãn hiệu sản phẩm')
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Thêm mới nhãn hiệu sản phẩm</h6>
         </div>
         <div class="card-body">
-            <form action="{{route('admin.nhan-hieu-san-pham.them-nhan-hieu-san-pham')}}" method="POST">
+            <form action="{{ route('admin.nhan-hieu-san-pham.them-nhan-hieu-san-pham') }}" method="POST">
                 @csrf
                 <div class="form-row">
                     <div class="form-group col-md-9">
                         <label for="inputEmail4">Tên nhãn hiệu sản phẩm</label>
-                        <input type="text" name="tennhanhieu" class="form-control" placeholder="Tên nhãn hiệu sản phẩm">
+                        <input type="text" name="tennhanhieu" class="form-control"
+                            placeholder="Tên nhãn hiệu sản phẩm">
                         <div class="error-message">{{ $errors->first('tennhanhieu') }}</div>
                     </div>
                     <div class="form-group col-md-3">
@@ -56,7 +57,7 @@
                     <tbody>
                         @foreach ($nhanhieu as $item)
                             <tr>
-                                <td>{{$item->tennhanhieu}}</td>
+                                <td>{{ $item->tennhanhieu }}</td>
                                 <td>
                                     @if ($item->trangthai == 0)
                                         Xuất bản
@@ -64,8 +65,8 @@
                                         Nháp
                                     @endif
                                 </td>
-                                <td>{{$item->created_at}}</td>
-                                <td>{{$item->updated_at}}</td>
+                                <td>{{ $item->created_at }}</td>
+                                <td>{{ $item->updated_at }}</td>
                                 <td>
                                     <a href="#">Xem chi tiết</a>
                                 </td>

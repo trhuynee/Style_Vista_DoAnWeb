@@ -53,7 +53,7 @@ class taiKhoanAdminController extends Controller
             'diachi.max' => 'Địa chỉ không quá 255 ký tự',
             'diachi.required' => 'Không được để trống',
             'phanquyen.required' => 'Không được để trống',
-        ]);     
+        ]);
         if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
             $filename = time() . '.' . $avatar->getClientOriginalExtension();
@@ -78,7 +78,7 @@ class taiKhoanAdminController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)    
+    public function show(string $id)
     {
         $user = User::where('id', $id)->first();
         if(!$user){
@@ -110,7 +110,7 @@ class taiKhoanAdminController extends Controller
             'hovaten.max' => 'Mật khẩu không quá 30 ký tự',
             'diachi.max' => 'Địa chỉ không quá 255 ký tự',
             'diachi.required' => 'Không được để trống',
-        ]);     
+        ]);
         if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
             $filename = time() . '.' . $avatar->getClientOriginalExtension();
@@ -156,7 +156,7 @@ class taiKhoanAdminController extends Controller
                 $user->delete();
                 return \redirect()->route('admin.tai-khoan-khach-hang.danh-sach-tai-khoan-khach-hang');
             }
-            
+
         }else{
             return redirect()->route('admin.trang-chu');
         }

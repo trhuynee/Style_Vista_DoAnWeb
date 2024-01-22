@@ -22,7 +22,11 @@ class sanPhamController extends Controller
         $sanPham = SanPham::all();
         return view('admin.san-pham.danh-sanh-san-pham', compact('sanPham'));
     }
-
+    public function dssp()
+    {
+        $sanPham = SanPham::all();
+        return view('user.san-pham', compact('sanPham'));
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -59,7 +63,7 @@ class sanPhamController extends Controller
             'tensanpham' => 'Không được để trống',
             'tensanpham.unique' => 'Tên sản phẩm đã tồn tại',
 
-        ]);     
+        ]);
         $sanPham = new SanPham;
         $sanPham->tensanpham = $request->input('tensanpham');
         $sanPham->loaisp_id = $request->input('loaisanpham');
@@ -76,7 +80,7 @@ class sanPhamController extends Controller
             $hinhAnh = new Image;
             $hinhAnh->sp_id = $sanPham->id;
             $hinhAnh->tenimage = 'uploads/' . $filename;
-            $hinhAnh->save(); 
+            $hinhAnh->save();
         }
         Alert()->success('Thành công','Thêm sản phẩm thành công.');
         return redirect()->back();
@@ -105,7 +109,7 @@ class sanPhamController extends Controller
             'mau.required' => 'Không được để trống',
             'soluong.required' => 'Không được để trống',
             'soluong.min' => 'Phải lớn hơn 0',
-        ]);     
+        ]);
         if(ChiTietSanPham::where('mau_id', $request->input('mau'))->exists() && ChiTietSanPham::where('size', $request->input('kichthuoc'))->exists()){
             Alert()->error('Thất bại','Sản phẩm đã tồn tại bạn chỉ có thể chỉnh sửa.');
             return \redirect()->back();
@@ -136,16 +140,24 @@ class sanPhamController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    public function trangchu()
+    {
+        $tenNhanHieus = ['Yame', 'Ben & Tod', 'Chuottrang', 'SomeHow', 'Uniqlo'];
+        // Lấy thông tin về các nhãn hiệu
+        $nhanHieus = NhanHieu::whereIn('tennhanhieu', $tenNhanHieus)->get();
+        // Lấy các sản phẩm thuộc các nhãn hiệu trên
+        $ctspCacNhanHieu = SanPham::whereIn('nh_id', $nhanHieus->pluck('id'))->get();
 
+        $sanPham = SanPham::with('images')->get()->unique('id');
+
+
+        return view('user.home', compact('ctspCacNhanHieu', 'nhanHieus', 'sanPham'));
+    }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function trangchu()
-    {
-        $ctsp = SanPham::all();
-        return view('user.home', compact('ctsp'));
-    }
+
     public function ctsanpham(string $id){
         $binhluan = binhluan::where('sanpham_id', $id)->get();
         $sanpham = SanPham::find($id);
@@ -159,13 +171,15 @@ class sanPhamController extends Controller
 
         return view('user.chi-tiet-san-pham', compact('images','ChiTietSanPham','ChiTietSanPham1','gia','binhluan', 'sanpham'));
     }
+
+
     public function binhluan(Request $request, string $id){
         $binhluan = new binhluan;
         $binhluan->nguoidung_id = session('id');
         $binhluan->sanpham_id = $id;
         $binhluan->noidung= $request->input('noidung');
         $binhluan->save();
-        return \redirect()->back(); 
+        return \redirect()->back();
     }
     public function xoaAnh(string $id){
         $image = Image::find($id);
@@ -196,20 +210,85 @@ class sanPhamController extends Controller
             Alert()->success('Thành công', 'Cập nhật sản phẩm thành công');
             return \redirect()->back();
         }
+    }
+    // public function capNhatSanPham(Request $request, string $id)
+    // {
+    //     $sanpham = SanPham::find($id);
 
-    }
-    public function themAnh(string $id, Request $request){
-        foreach ($request->file('images') as $image) {
-            $filename = $image->getClientOriginalName();
-            $image->move(public_path('uploads'), $filename);
-            $hinhAnh = new Image;
-            $hinhAnh->sp_id = $id;
-            $hinhAnh->tenimage = 'uploads/' . $filename;
-            $hinhAnh->save(); 
+    //     // Kiểm tra sự thay đổi trước khi cập nhật
+    //     if (
+    //         $sanpham->tensanpham == $request->input('tensanpham') &&
+    //         $sanpham->loaisp_id == $request->input('loaisanpham') &&
+    //         $sanpham->nh_id == $request->input('nhanhieu') &&
+    //         $sanpham->mota == $request->input('mota') &&
+    //         $sanpham->dongia == $request->input('dongia') &&
+    //         $sanpham->giamgia == $request->input('giamgia')
+    //     ) {
+    //         Alert()->error('Thất bại', 'Không có gì để cập nhật');
+    //         return redirect()->back();
+    //     }
+
+    //     //Kiểm tra sự tồn tại chỉ cho sản phẩm cụ thể
+    //     if (
+    //         SanPham::where('id', '!=', $id)->where('tensanpham', $request->input('tensanpham'))->exists() ||
+    //         SanPham::where('id', '!=', $id)->where('loaisp_id', $request->input('loaisanpham'))->exists() ||
+    //         SanPham::where('id', '!=', $id)->where('nh_id', $request->input('nhanhieu'))->exists() ||
+    //         SanPham::where('id', '!=', $id)->where('mota', $request->input('mota'))->exists()
+    //     ) {
+    //         Alert()->error('Thất bại', 'Thông tin đã tồn tại cho sản phẩm khác');
+    //         return redirect()->back();
+    //     }
+
+    //     // Cập nhật từng trường một
+    //     $sanpham->tensanpham = $request->input('tensanpham');
+    //     $sanpham->loaisp_id = $request->input('loaisanpham');
+    //     $sanpham->nh_id = $request->input('nhanhieu');
+    //     $sanpham->mota = $request->input('mota');
+    //     $sanpham->dongia = $request->input('dongia');
+    //     $sanpham->giamgia = $request->input('giamgia');
+    //     $sanpham->save();
+
+    //     Alert()->success('Thành công', 'Cập nhật sản phẩm thành công');
+    //     return redirect()->back();
+    // }
+
+
+    // public function themAnh(string $id, Request $request){
+    //     foreach ($request->file('images') as $image) {
+    //         $filename = $image->getClientOriginalName();
+    //         $image->move(public_path('uploads'), $filename);
+    //         $hinhAnh = new Image;
+    //         $hinhAnh->sp_id = $id;
+    //         $hinhAnh->tenimage = 'uploads/' . $filename;
+    //         $hinhAnh->save();
+    //     }
+    //     Alert()->success('Thành công', 'Thêm ảnh sản phẩm thành công');
+    //     return \redirect()->back();
+    // }
+
+    public function themAnh(string $id, Request $request)
+    {
+        $images = $request->file('images');
+
+        // Kiểm tra xem có tệp tin nào được chọn không
+        if ($images) {
+            foreach ($images as $image) {
+                $filename = $image->getClientOriginalName();
+                $image->move(public_path('uploads'), $filename);
+                $hinhAnh = new Image;
+                $hinhAnh->sp_id = $id;
+                $hinhAnh->tenimage = 'uploads/' . $filename;
+                $hinhAnh->save();
+            }
+
+            Alert()->success('Thành công', 'Thêm ảnh sản phẩm thành công');
+        } else {
+            Alert()->error('Lỗi', 'Không có tệp tin được chọn');
         }
-        Alert()->success('Thành công', 'Thêm ảnh sản phẩm thành công');
-        return \redirect()->back();
+
+        return redirect()->back();
     }
+
     public function suaAnh(string $id, Request $request){
         if ($request->hasFile('image')) {
             $hinhAnh = $request->file('image');
@@ -222,10 +301,10 @@ class sanPhamController extends Controller
         $image = Image::find($id);
         $image->tenimage = $hinhAnhUrl;
         $image->save();
-        
-        
+
+
         Alert()->success('Thành công', 'Sửa ảnh sản phẩm thành công');
         return redirect()->back();
-        
+
     }
 }

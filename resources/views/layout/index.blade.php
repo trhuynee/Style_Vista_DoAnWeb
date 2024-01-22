@@ -24,6 +24,7 @@
 
     <link rel="stylesheet" href="{{ asset('assets/css/lightbox.css') }}">
 
+
 </head>
 
 <body>
@@ -41,48 +42,86 @@
 
     <!-- ***** Header Area Start ***** -->
     <header class="header-area header-sticky">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <nav class="main-nav">
-                        <!-- ***** Logo Start ***** -->
-                        <a href="/" class="logo">
-                            <img src="{{ asset('img/logo.png') }}">
-                        </a>
-                        <!-- ***** Logo End ***** -->
-                        <!-- ***** Menu Start ***** -->
-                        <ul class="nav">
-                            <li class="scroll-to-section"><a href="/" class="active">Trang chủ</a></li>
-                            <li class="scroll-to-section"><a href="san-pham">Sản Phẩm</a></li>
-                            <li class="scroll-to-section"><a href="gioi-thieu">Giới thiệu</a></li>
-                            {{-- <li class="scroll-to-section"><a href="single-product">Single Product</a></li> --}}
-                            <li class="scroll-to-section"><a href="lien-he">Liên hệ</a></li>
-                            <li class="scroll-to-section"><a href="gio-hang"><i class="fa fa-shopping-cart"
-                                        style="font-size:20px"></i></a> </li>
-                            <?php
-                            $kt = Auth::check();
-                            ?>
-                            @if ($kt)
-                                <li class="scroll-to-section"><a
-                                        href="{{ route('khach-hang.trang-thong-tin-khach-hang') }}"><i
-                                            class="fa fa-user"></i>{{ session('name') }}</a></li>
-                            @else
-                                <li class="scroll-to-section"><a
-                                        href="{{ route('dang-nhap') }}"><i
-                                            class="fa fa-user"></i>Đăng nhập</a></li>
-                            @endif
-                            <li class="scroll-to-section"><a href="#"><i class="fa fa-heart-o"
-                                        style="font-size:16px;"></i></a></li>
-                        </ul>
-                        <a class='menu-trigger'>
-                            <span>Menu</span>
-                        </a>
+        {{-- <div class="container"> --}}
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="/" class="logo">
+                        <img src="{{ asset('img/logo.png') }}">
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li class="scroll-to-section"><a href="/" class="active">Trang chủ</a></li>
+                        <li class="scroll-to-section"><a href="san-pham">Sản Phẩm</a></li>
+                        <li class="scroll-to-section"><a href="gioi-thieu">Giới thiệu</a></li>
+                        {{-- <li class="scroll-to-section"><a href="single-product">Single Product</a></li> --}}
+                        <li class="scroll-to-section"><a href="lien-he">Liên hệ</a></li>
+                        <li class="scroll-to-section"><a href="lien-he"><i class="fa fa-search"
+                                    style="font-size:20px"></i></a></li>
+                        <li class="scroll-to-section"><a href="gio-hang"><i class="fa fa-shopping-cart"
+                                    style="font-size:20px"></i></a> </li>
+                        <li class="scroll-to-section"><a href="danh-sach-yeu-thich"><i class="fa fa-heart-o"
+                                    style="font-size:16px;"></i></a></li>
+                        <?php
+                        $kt = Auth::check();
+                        ?>
+                        @if ($kt)
+                            <li class="scroll-to-section">
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" href="thong-tin-khach-hang" role="button"
+                                        id="userDropdown" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        <i class="fa fa-user"></i> {{ session('name') }}
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="userDropdown">
+                                        <a class="dropdown-item" href="thong-tin-khach-hang">Thông tin</a>
+                                        <a class="dropdown-item" href="#" data-toggle="modal"
+                                            data-target="#logoutModal">
+                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Đăng xuất
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                        @else
+                            <li class="scroll-to-section"><a href="{{ route('dang-nhap') }}"><i
+                                        class="fa fa-user"></i></a></li>
+                        @endif
 
-                        <!-- ***** Menu End ***** -->
-                    </nav>
-                </div>
+                    </ul>
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- Logout Modal-->
+                    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Đăng xuất?</h5>
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">Xác nhận đăng xuất!!!.</div>
+                                <form action="{{ route('dang-xuat') }}" method="POST">
+                                    @csrf
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" type="button"
+                                            data-dismiss="modal">Hủy</button>
+                                        <button class="btn btn-primary" type="submit">Đăng xuất</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ***** Menu End ***** -->
+                </nav>
             </div>
         </div>
+        {{-- </div> --}}
     </header>
     <!-- ***** Header Area End ***** -->
 
@@ -130,7 +169,7 @@
                 <div class="col-lg-3">
                     <div class="first-item">
                         <div class="logo">
-                            <img src="img/white-logo.png" alt="hexashop ecommerce templatemo">
+                            <img src="/img/white-logo.png" alt="hexashop ecommerce templatemo">
                         </div>
                         <ul>
                             <li><a href="#">65 Huỳnh Thúc Kháng, Bến Nghé, Quận 1, Tp.Hồ Chí Minh</a>
@@ -206,6 +245,7 @@
     <!-- Global Init -->
     <script src="assets/js/custom.js"></script>
 
+
     <script>
         $(function() {
             var selectedClass = "";
@@ -222,6 +262,52 @@
         });
     </script>
 
+    {{-- chuyển hình ảnh con --}}
+    <script>
+        $(document).ready(function() {
+            $('.thumbnail').hover(
+                function() {
+                    $('.main-image').attr('src', $(this).attr('src')).fadeIn();
+                },
+                function() {
+                    // No action on mouseout
+                }
+            );
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.add-to-favorites').on('click', function(e) {
+                e.preventDefault();
+
+                var productId = $(this).data('product-id');
+                var isFavorite = $(this).data('favorite-status') === 'true';
+
+                $.ajax({
+                    url: '/them-vao-yeu-thich/' + productId,
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            isFavorite = !isFavorite;
+                            $(this).data('favorite-status', isFavorite ? 'true' : 'false');
+                            $(this).html('<i class="fa fa-heart' + (isFavorite ? '-red' :
+                                '-o') + '"></i>');
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function() {
+                        alert('Đã xảy ra lỗi. Vui lòng thử lại sau.');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

@@ -17,7 +17,11 @@ class taiKhoanKhachHangController extends Controller
         ->get();
         return view('admin.tai-khoan.danh-sach-tai-khoan-khach-hang', compact('users'));
     }
-
+    public function thongtinkh()
+    {
+        $kh = auth()->user();
+        return view('user.thong-tin-khach-hang', compact('kh'));
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -65,4 +69,25 @@ class taiKhoanKhachHangController extends Controller
     {
         //
     }
+
+    // public function thongtin()
+    // {
+    //     return view('user.thong-tin-khach-hang');
+    // }
+
+    // public function donhang()
+    // {
+    //     return view('user.don-hang');
+    // }
+
+    // public function thaydoimk()
+    // {
+    //     return view('user.doi-mat-khau');
+    // }
+
+    // public function diachi()
+    // {
+    //     return view('user.dia-chi');
+    // }
+
 }

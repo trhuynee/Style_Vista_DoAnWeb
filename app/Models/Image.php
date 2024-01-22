@@ -13,4 +13,8 @@ class Image extends Model
         'sp_id',
         'tenimage',
     ];
+    public function sanpham()
+    {
+        return $this->belongsTo(SanPham::class, 'sp_id', 'id');
+    }
 }

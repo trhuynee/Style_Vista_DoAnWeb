@@ -9,9 +9,9 @@
                 <div class="col-lg-3">
                     <div class="left-content">
                         <li><a href="/thong-tin-khach-hang">Thông tin tài khoản</a></li>
-                        <li><a href="/thong-tin-khach-hang/don-hang">Đơn hàng của bạn</a></li>
-                        <li><a href="/thong-tin-khach-hang/doi-mat-khau">Đổi mật khẩu</a></li>
-                        <li><a href="/thong-tin-khach-hang/dia-chi">Sổ địa chỉ</a></li>
+                        <li><a href="/don-hang">Đơn hàng của bạn</a></li>
+                        <li><a href="/doi-mat-khau">Đổi mật khẩu</a></li>
+                        <li><a href="/dia-chi">Sổ địa chỉ</a></li>
                     </div>
                 </div>
                 <div class="col-lg-9">
@@ -43,8 +43,8 @@
                                     </th>
                                     @foreach ($diachi as $item)
                                         <tr>
-                                            <td>{{$dem}}</td>
-                                            <td>{{$item->diachi}}</td>
+                                            <td>{{ $dem }}</td>
+                                            <td>{{ $item->diachi }}</td>
                                         </tr>
                                         @php
                                             $dem++;

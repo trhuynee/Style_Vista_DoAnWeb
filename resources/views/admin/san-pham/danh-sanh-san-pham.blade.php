@@ -1,5 +1,5 @@
 @extends('admin.index')
-@section('title', 'danh sách sản phẩm')
+@section('title', 'Danh sách sản phẩm')
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -40,8 +40,10 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{route('admin.san-pham.chi-tiet-san-pham', ['id' => $item->id])}}" style="color: red">Chi tiết sản phẩm</a>
-                                    <a href="{{ route('admin.san-pham.them-san-pham-con', ['id' => $item->id]) }}">Thêm sản phẩm con</a>
+                                    <a href="{{ route('admin.san-pham.chi-tiet-san-pham', ['id' => $item->id]) }}"
+                                        style="color: red">Chi tiết sản phẩm</a>
+                                    <a href="{{ route('admin.san-pham.them-san-pham-con', ['id' => $item->id]) }}">Thêm sản
+                                        phẩm con</a>
                                 </td>
                             </tr>
                         @endforeach

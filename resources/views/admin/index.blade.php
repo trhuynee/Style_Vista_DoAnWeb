@@ -56,7 +56,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="{{route('admin.thong-ke.thong-ke-don-hang')}}">
+                <a class="nav-link" href="{{ route('admin.thong-ke.thong-ke-don-hang') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Thống kê</span></a>
             </li>
@@ -273,35 +273,7 @@
                                 <h6 class="dropdown-header">
                                     Thông báo đặt hàng
                                 </h6>
-                                @foreach ($hoadonban1 as $item)
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        <div class="mr-3">
-                                            <div class="icon-circle bg-primary">
-                                                <i class="fas fa-file-alt text-white"></i>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="small text-gray-500">
-                                                {{ $item->created_at }}</div>
-                                            <span class="font-weight-bold">
-                                                @if ($item->ttvanchuyen == 0)
-                                                    Đơn hàng mới
-                                                @elseif ($item->ttvanchuyen == 2 && $item->ttthanhtoan == 1)
-                                                    Đơn hàng giao thành công
-                                                @elseif ($item->ttvanchuyen == 3)
-                                                    Đơn hàng bị hủy
-                                                @elseif ($item->ttvanchuyen == 4)
-                                                    Đơn hàng hoàn trả
-                                                @else
-                                                    Đơn hàng bị hủy từ shop
-                                                @endif
-                                                <br>
-                                            </span>
-                                            <span class="font-weight-bold">Mã đơn: {{ $item->id }}. Tên đơn:
-                                                {{ $item->cthdb->sanpham->tensanpham }}</span>
-                                        </div>
-                                    </a>
-                                @endforeach
+
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Hiển thị
                                     tất cả</a>
                             </div>

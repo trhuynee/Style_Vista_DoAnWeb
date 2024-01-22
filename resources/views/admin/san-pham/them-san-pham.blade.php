@@ -1,5 +1,5 @@
 @extends('admin.index')
-@section('title', 'thêm sản phẩm')
+@section('title', 'Thêm sản phẩm')
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -18,7 +18,7 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label for="inputState">loại sản phẩm</label>
+                        <label for="inputState">Loại sản phẩm</label>
                         <select id="inputState" name="loaisanpham" class="form-control">
                             <option selected value=" ">Loại sản phẩm</option>
                             @foreach ($loaisp as $item)
@@ -109,7 +109,6 @@
 @section('css')
 
     <style>
-        
         .preview-image {
             max-width: 100px;
             max-height: 100px;
